@@ -1,12 +1,19 @@
 // import 'package:employee_activity_tracker/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:home_stock/models/item.dart';
 
-class AddItem extends StatefulWidget {
+class EditItem extends StatefulWidget {
+
+  final Item item;
+
+  EditItem({this.item});
+
   @override
-  _AddItemState createState() => _AddItemState();
+  _EditItemState createState() => _EditItemState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _EditItemState extends State<EditItem> {
 
   final _formKey = GlobalKey<FormState>();
   final List<String> categories = ['Fresh Food', 'Dry Food', 'Grocery', 'Household', 'Other'];
@@ -15,10 +22,14 @@ class _AddItemState extends State<AddItem> {
   String _name;
   String _category;
   String _metric;
-  String _quantity;
+  int _quantity;
 
   @override
   Widget build(BuildContext context) {
+    _name = _name ?? widget.item.name;
+    _category = _category ?? widget.item.category;
+    _metric = _metric ?? widget.item.metric;
+    _quantity = _quantity ?? widget.item.quantity;
 
     return Form(
       key: _formKey,
@@ -36,36 +47,37 @@ class _AddItemState extends State<AddItem> {
           ),
           SizedBox(height: 20.0),
           DropdownButtonFormField(
-            value: _category ?? categories[0],
-            items: categories.map((item){
+            value: _category.isEmpty ? null : categories[categories.indexOf(_category)],
+            items: categories.map((category){
               return DropdownMenuItem(
-                value: item,
-                child: Text('$item'),
+                value: category,
+                child: Text('$category'),
               );
             }).toList(),
             onChanged: (val) => setState(() => _category = val),
           ),
           DropdownButtonFormField(
-            value: _metric ?? metrics[0],
-            items: metrics.map((item){
+            value: _metric.isEmpty ? null : metrics[metrics.indexOf(_metric)],
+            items: metrics.map((metric){
               return DropdownMenuItem(
-                value: item,
-                child: Text('$item'),
+                value: metric,
+                child: Text('$metric'),
               );
             }).toList(),
             onChanged: (val) => setState(() => _metric = val),
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            initialValue: _quantity ?? 'Quantity',
+            initialValue: _quantity.toString().isEmpty ? '0' : _quantity.toString(),
+            keyboardType: TextInputType.number,
             validator: (val) => val.isEmpty ? 'Please enter Quantity' : null,
-            onChanged: (val) => setState(() => _quantity = val),
+            onChanged: (val) => setState(() => _quantity = int.parse(val)),
           ),
           SizedBox(height: 20.0),
           RaisedButton(
             color: Colors.blue,
             child: Text(
-              'Add Item',
+              'Edit Item',
               style: TextStyle(color: Colors.white)
             ),
             onPressed: () async {

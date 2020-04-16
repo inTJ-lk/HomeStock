@@ -3,8 +3,8 @@ import 'package:home_stock/models/item.dart';
 import 'itemTile.dart';
 
 List items = [
-  Item(name: 'Beans', category : 'Fresh Food', metric: 'Kg', quantity: 1),
-  Item(name: 'Carrots', category : 'Fresh Food', metric: 'Kg', quantity: 2),
+  Item(name: 'Beans', category : 'Fresh Food', metric: 'Kilograms', quantity: 1),
+  Item(name: 'Carrots', category : 'Fresh Food', metric: 'Kilograms', quantity: 2),
 ];
 
 class ItemList extends StatefulWidget {

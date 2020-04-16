@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_stock/models/item.dart';
+import 'package:home_stock/screens/home/editItem.dart';
 
 class ItemTile extends StatelessWidget {
 
@@ -10,12 +11,30 @@ class ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    void _showEditItemPanel(){
-      showModalBottomSheet(context: context, builder: (context){
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: Text('Edit Item'),
-        );
+    void _showEditItemPanel(value){
+      showModalBottomSheet(context: context, isScrollControlled: true ,builder: (context){
+        if(value.title == 'Edit'){
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                EditItem(item: item),
+              ],
+            ),
+          );
+        }else if(value.title == 'Add to Shopping List'){
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: Text('Add to Shopping List'),
+          );
+        }else{
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: Text('Remove'),
+          );
+        }
+        
       });
     } 
 
@@ -26,7 +45,7 @@ class ItemTile extends StatelessWidget {
         child: ListTile(
           title: Text('${item.name} - ${item.quantity}${item.metric}'),
           trailing: PopupMenuButton<Choice>(
-                      onSelected: (value) {_showEditItemPanel();},
+                      onSelected: (value) {_showEditItemPanel(value);},
                       itemBuilder: (BuildContext context) {
                         return choices.map((Choice choice) {
                           return PopupMenuItem<Choice>(
