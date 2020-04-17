@@ -43,7 +43,7 @@ class ItemTile extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 0.0),
         child: ListTile(
-          title: Text('${item.name} - ${item.quantity}${item.metric}'),
+          title: Text('${item.name} - ${item.quantity} ${item.metric}'),
           trailing: PopupMenuButton<Choice>(
                       onSelected: (value) {_showEditItemPanel(value);},
                       itemBuilder: (BuildContext context) {

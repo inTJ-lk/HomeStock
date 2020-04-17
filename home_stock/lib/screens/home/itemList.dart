@@ -1,21 +1,29 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:home_stock/models/item.dart';
+import 'package:provider/provider.dart';
 import 'itemTile.dart';
 
 List items = [
-  Item(name: 'Beans', category : 'Fresh Food', metric: 'Kilograms', quantity: 1),
-  Item(name: 'Carrots', category : 'Fresh Food', metric: 'Kilograms', quantity: 2),
+  Item(name: 'Beans', category : 'Fresh Food', metric: 'Kilograms', quantity: 1, inShoppingList: 0),
+  Item(name: 'Carrots', category : 'Fresh Food', metric: 'Kilograms', quantity: 2, inShoppingList: 0),
 ];
 
-class ItemList extends StatefulWidget {
+class ItemList extends StatefulWidget{
   @override
   _ItemListState createState() => _ItemListState();
 }
 
-class _ItemListState extends State<ItemList> {
+class _ItemListState extends State<ItemList>{
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context){
+
+    // DocumentSnapshot i = Provider.of<DocumentSnapshot>(context) ?? [];
+    List<Item> i = Provider.of<List<Item>>(context) ?? [];
+
     return Column(
       children: <Widget>[
         Padding(
@@ -29,9 +37,9 @@ class _ItemListState extends State<ItemList> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: items.length,
+            itemCount: i.length,
             itemBuilder: (context, index) {
-              return ItemTile(item: items[index]);
+              return ItemTile(item: i[index]);
             },
           ),
         ),

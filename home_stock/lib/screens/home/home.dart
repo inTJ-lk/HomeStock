@@ -1,11 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:home_stock/models/item.dart';
+import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/home/addItem.dart';
 import 'package:home_stock/screens/home/itemList.dart';
+import 'package:home_stock/services/database.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<User>(context);
+    final listForUser = Provider.of<UserData>(context);
 
     void _showAddItemPanel(){
       showModalBottomSheet(context: context,isScrollControlled: true, builder: (context){
@@ -22,7 +30,9 @@ class Home extends StatelessWidget {
       });
     }    
 
-    return Scaffold(
+    return StreamProvider<List<Item>>.value(
+      value: DatabaseService(uid: listForUser.items).itemData,
+      child: Scaffold(
         appBar: AppBar(
           title: Text('HomeStock'),
           centerTitle: true,
@@ -59,7 +69,8 @@ class Home extends StatelessWidget {
           child: Icon(Icons.add),
           backgroundColor: Colors.blue,
         ), 
-      );
+      ),
+    );
   }
 }
 

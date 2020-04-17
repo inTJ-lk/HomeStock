@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:home_stock/screens/authentication/authenticate.dart';
+import 'package:home_stock/screens/home/home.dart';
 import 'package:home_stock/services/auth.dart';
+import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:home_stock/models/user.dart';
 
@@ -14,14 +16,18 @@ class Wrapper extends StatelessWidget {
       return Authenticate();
     }
     else{
-      return Container(
-        child: FlatButton.icon(
-          onPressed: () async {
-            await _auth.signOut();
-          }, 
-          icon: Icon(Icons.person), 
-          label: Text('logout', style: TextStyle(color: Colors.white),)
-        )
+      // return Container(
+      //   child: FlatButton.icon(
+      //     onPressed: () async {
+      //       await _auth.signOut();
+      //     }, 
+      //     icon: Icon(Icons.person), 
+      //     label: Text('logout', style: TextStyle(color: Colors.white),)
+      //   )
+      // );
+      return StreamProvider<UserData>.value(
+        value: DatabaseService(uid: user.uid).userData,
+        child: Home(),
       );
     }
   }
