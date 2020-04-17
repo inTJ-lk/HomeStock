@@ -22,7 +22,10 @@ class Home extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              AddItem(),
+              StreamProvider<UserData>.value(
+                value: DatabaseService(uid: user.uid).userData,
+                child: AddItem()
+              ),
             ],
           ),
         );
