@@ -57,7 +57,7 @@ class DatabaseService {
 
   Future updateItemData(String name, String category, int quantity, String metric, int inShoppingList) async{
     return await itemCollection.document(uid).updateData({
-      name: {'name': name, 'category': category, 'metric': metric, 'quantity': quantity, 'inShoppingList': 0}
+      name: {'name': name, 'category': category, 'metric': metric, 'quantity': quantity, 'inShoppingList': inShoppingList}
     });
   }
 

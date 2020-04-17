@@ -23,7 +23,7 @@ class Home extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               StreamProvider<UserData>.value(
-                value: DatabaseService(uid: user.uid).userData,
+                value: DatabaseService(uid: listForUser.uid).userData,
                 child: AddItem()
               ),
             ],
