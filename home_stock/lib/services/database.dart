@@ -55,9 +55,17 @@ class DatabaseService {
     return itemCollection.document(uid).snapshots().map(_itemDataFromSnapshot);
   }
 
+  // Function to add and update item data
   Future updateItemData(String name, String category, int quantity, String metric, int inShoppingList) async{
     return await itemCollection.document(uid).updateData({
       name: {'name': name, 'category': category, 'metric': metric, 'quantity': quantity, 'inShoppingList': inShoppingList}
+    });
+  }
+
+  // Function to delete an item from a document
+  Future deleteItem(String name) async{
+    return await itemCollection.document(uid).updateData({
+      name: FieldValue.delete()
     });
   }
 

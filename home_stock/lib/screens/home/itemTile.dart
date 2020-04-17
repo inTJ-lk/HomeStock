@@ -39,7 +39,27 @@ class ItemTile extends StatelessWidget {
         }else{
           return Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text('Remove'),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Delete Item?',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 20.0),
+                RaisedButton(
+                  color: Colors.red,
+                  child: Text(
+                    'Delete',
+                    style: TextStyle(color: Colors.white)
+                  ),
+                  onPressed: () async {
+                    await DatabaseService(uid: listForUser.uid).deleteItem(item.name);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           );
         }
         
