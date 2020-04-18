@@ -15,7 +15,6 @@ class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  final _formKey1 = GlobalKey<FormState>();
 
   bool loading = false;
 
@@ -30,67 +29,7 @@ class _SignInState extends State<SignIn> {
 
     void _showResetPasswordDialog(){
       showDialog(context: context, barrierDismissible: true, builder: (context){
-        String text = "";
-        return AlertDialog(
-          title: Text('Reset Password'),
-          content: Form(
-            key: _formKey1,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                SizedBox(height: 12.0),
-                Text(
-                  'Enter email to reset password',
-                  style: TextStyle(color: Colors.black, fontSize: 14.0),
-                ),
-                TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                ),
-                validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                onChanged: (val) {
-                  setState(() {
-                    email = val;
-                  });
-                },
-              ),
-              SizedBox(height: 12.0),
-              Text(
-                text,
-                style: TextStyle(color: Colors.red, fontSize: 14.0),
-              ),
-            ]
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Reset'),
-              onPressed: () async {
-                if(_formKey1.currentState.validate()) {
-                  setState(() {
-                    loading = true;
-                  });
-                  dynamic result = await _auth.resetPassword(email);
-                  if(result == null) {
-                    print('error');
-                    setState(() {
-                      loading = false;
-                      text = 'Error Resetting Password';
-                    });
-                  }
-                  print(text);
-                }
-              },
-            ),
-            FlatButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-        
+        return ResetPassword();       
       });
     }
 
@@ -195,5 +134,104 @@ class _SignInState extends State<SignIn> {
         ),
       ),
     );
+  }
+}
+
+class ResetPassword extends StatefulWidget {
+  @override
+  _ResetPasswordState createState() => _ResetPasswordState();
+}
+
+class _ResetPasswordState extends State<ResetPassword> {
+
+  final AuthService _auth = AuthService();
+  final _formKey1 = GlobalKey<FormState>();
+
+  String email = "";
+  String text = "";
+
+  @override
+  Widget build(BuildContext context) {
+
+    void _showResetPasswordSuccess(){
+      showDialog(context: context, barrierDismissible: true, builder: (context){
+        return AlertDialog(
+          title: Center(child: Text('Reset Password')),
+          content: Text(
+            'Password reset email sent. Use the link in the email to reset password',
+            style: TextStyle(color: Colors.black, fontSize: 18.0),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      });
+    }
+
+    return AlertDialog(
+          title: Center(child: Text('Reset Password')),
+          content: Form(
+            key: _formKey1,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(height: 12.0),
+                Text(
+                  'Enter email to reset password',
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),
+                ),
+                SizedBox(height: 12.0),
+                TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                ),
+                validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                onChanged: (val) {
+                  setState(() {
+                    email = val;
+                    text = "";
+                  });
+                },
+              ),
+              SizedBox(height: 12.0),
+              Text(
+                text,
+                style: TextStyle(color: Colors.red, fontSize: 14.0),
+              ),
+            ]
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Reset'),
+              onPressed: () async {
+                if(_formKey1.currentState.validate()) {
+                  dynamic result = await _auth.resetPassword(email);
+                  print(result);
+                  if(result == null) {
+                    Navigator.of(context).pop();
+                    _showResetPasswordSuccess();
+                  }
+                  else {
+                    setState(() {
+                        text = 'Error Resetting Password';
+                    });
+                  }
+                }
+              },
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
   }
 }
