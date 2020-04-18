@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/services/auth.dart';
 
 class SignIn extends StatefulWidget {

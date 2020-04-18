@@ -24,6 +24,8 @@ class DatabaseService {
     });
   }
 
+  // Item snapshot is converted into a list of item objects 
+  // For each used instead of map as map did not work 
   List<Item> _itemDataFromSnapshot(DocumentSnapshot snapshot){
     try{
       Map<String, dynamic> myMap = new Map<String, dynamic>.from(snapshot.data);

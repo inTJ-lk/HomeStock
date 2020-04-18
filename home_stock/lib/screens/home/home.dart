@@ -4,6 +4,7 @@ import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/home/addItem.dart';
 import 'package:home_stock/screens/home/itemList.dart';
+import 'package:home_stock/screens/shoppingList/shoppingList.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:home_stock/services/auth.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,20 @@ class Home extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.shopping_basket),
               tooltip: 'Shopping List',
-              onPressed: () {},
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => 
+                    StreamProvider<List<Item>>.value(
+                      value: DatabaseService(uid: listForUser.items).itemData,
+                      child: StreamProvider<UserData>.value(
+                        value: DatabaseService(uid: listForUser.items).userData,
+                        child: ShoppingList()
+                      )
+                    )
+                  ),
+                );
+              },
             ),
             IconButton(
               icon: Icon(Icons.settings),
