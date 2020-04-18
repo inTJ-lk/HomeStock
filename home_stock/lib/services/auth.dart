@@ -46,7 +46,6 @@ class AuthService {
 
     } 
     catch (e) {
-      print(e.toString());
       return null;
     }
   }
@@ -57,8 +56,17 @@ class AuthService {
       return await _auth.signOut();
     } 
     catch (e) {
-      print(e.toString());
       return null;
     }
   }
+
+  //reset password
+  Future resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } 
+    catch (e) {
+      return null;
+    }
+}
 }
