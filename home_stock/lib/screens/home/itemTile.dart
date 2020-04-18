@@ -34,7 +34,54 @@ class ItemTile extends StatelessWidget {
         }else if(value.title == 'Add to Shopping List'){
           return Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text('Add to Shopping List'),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Add Item to Shopping List?',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 20.0),
+                RaisedButton(
+                  color: Colors.blue,
+                  child: Text(
+                    'Add',
+                    style: TextStyle(color: Colors.white)
+                  ),
+                  onPressed: () async {
+                    int val = item.inShoppingList == 1 ? 0 : 1;
+                    await DatabaseService(uid: listForUser.uid).addOrRemoveFromShoppingList(item.name, val);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
+        }else if(value.title == 'Remove from Shopping List'){
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Remove Item from Shopping List?',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 20.0),
+                RaisedButton(
+                  color: Colors.red,
+                  child: Text(
+                    'Remove',
+                    style: TextStyle(color: Colors.white)
+                  ),
+                  onPressed: () async {
+                    int val = item.inShoppingList == 1 ? 0 : 1;
+                    await DatabaseService(uid: listForUser.uid).addOrRemoveFromShoppingList(item.name, val);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           );
         }else{
           return Container(
@@ -74,8 +121,15 @@ class ItemTile extends StatelessWidget {
           title: Text('${item.name} - ${item.quantity} ${item.metric}'),
           trailing: PopupMenuButton<Choice>(
                       onSelected: (value) {_showEditItemPanel(value);},
-                      itemBuilder: (BuildContext context) {
-                        return choices.map((Choice choice) {
+                      itemBuilder: item.inShoppingList == 0 ? (BuildContext context) {
+                        return choices.where((i) => i.title != 'Remove from Shopping List').toList().map((Choice choice) {
+                          return PopupMenuItem<Choice>(
+                            value: choice,
+                            child: Text(choice.title),
+                          );
+                        }).toList();
+                      } : (BuildContext context) {
+                        return choices.where((i) => i.title != 'Add to Shopping List').toList().map((Choice choice) {
                           return PopupMenuItem<Choice>(
                             value: choice,
                             child: Text(choice.title),
@@ -97,6 +151,7 @@ class Choice {
 
 const List<Choice> choices = const <Choice>[
   const Choice(title: 'Add to Shopping List'),
+  const Choice(title: 'Remove from Shopping List'),
   const Choice(title: 'Edit'),
-  const Choice(title: 'Remove'),
+  const Choice(title: 'Delete'),
 ];
