@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:home_stock/models/item.dart';
+import 'package:home_stock/models/user.dart';
+import 'package:home_stock/services/database.dart';
+import 'package:provider/provider.dart';
 
 class EditItem extends StatefulWidget {
 
@@ -26,6 +29,9 @@ class _EditItemState extends State<EditItem> {
 
   @override
   Widget build(BuildContext context) {
+
+    final listForUser = Provider.of<UserData>(context);
+
     _name = _name ?? widget.item.name;
     _category = _category ?? widget.item.category;
     _metric = _metric ?? widget.item.metric;
@@ -36,7 +42,7 @@ class _EditItemState extends State<EditItem> {
       child: Column(
         children: <Widget>[
           Text(
-            'Add Item',
+            'Edit Item',
             style: TextStyle(fontSize: 18.0),
           ),
           SizedBox(height: 20.0),
@@ -81,7 +87,11 @@ class _EditItemState extends State<EditItem> {
               style: TextStyle(color: Colors.white)
             ),
             onPressed: () async {
-              Navigator.pop(context);
+              if(_formKey.currentState.validate()){
+                await DatabaseService(uid: listForUser.uid).updateItemData(_name, _category, _quantity, _metric, widget.item.inShoppingList);
+                Navigator.pop(context);
+              }
+              // Navigator.pop(context);
             },
           ),
         ],

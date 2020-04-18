@@ -1,5 +1,8 @@
 // import 'package:employee_activity_tracker/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:home_stock/models/user.dart';
+import 'package:home_stock/services/database.dart';
+import 'package:provider/provider.dart';
 
 class AddItem extends StatefulWidget {
   @override
@@ -15,10 +18,18 @@ class _AddItemState extends State<AddItem> {
   String _name;
   String _category;
   String _metric;
-  String _quantity;
+  int _quantity;
 
   @override
   Widget build(BuildContext context) {
+
+    // Authprovider is not used so that once a user is directed to someone elses item list(Family)
+    // User can update the directed document rather than the document under uders own id
+    // Stream provider is used to wrap the addItem widget under home widget
+    final listForUser = Provider.of<UserData>(context);
+
+    _category = _category ?? categories[0];
+    _metric = _metric ?? metrics[0];
 
     return Form(
       key: _formKey,
@@ -30,7 +41,7 @@ class _AddItemState extends State<AddItem> {
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            initialValue: _name ?? 'Name',
+            decoration: InputDecoration(hintText: 'Item Name'),
             validator: (val) => val.isEmpty ? 'Please enter a Name' : null,
             onChanged: (val) => setState(() => _name = val),
           ),
@@ -57,9 +68,10 @@ class _AddItemState extends State<AddItem> {
           ),
           SizedBox(height: 20.0),
           TextFormField(
-            initialValue: _quantity ?? 'Quantity',
+            decoration: InputDecoration(hintText: 'Quantity'),
+            keyboardType: TextInputType.number,
             validator: (val) => val.isEmpty ? 'Please enter Quantity' : null,
-            onChanged: (val) => setState(() => _quantity = val),
+            onChanged: (val) => setState(() => _quantity = int.parse(val)),
           ),
           SizedBox(height: 20.0),
           RaisedButton(
@@ -69,7 +81,10 @@ class _AddItemState extends State<AddItem> {
               style: TextStyle(color: Colors.white)
             ),
             onPressed: () async {
-              Navigator.pop(context);
+              if(_formKey.currentState.validate()){
+                await DatabaseService(uid: listForUser.uid).updateItemData(_name, _category, _quantity, _metric, 0);
+                Navigator.pop(context);
+              }
             },
           ),
         ],
