@@ -5,9 +5,12 @@ import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/home/addItem.dart';
 import 'package:home_stock/screens/home/itemList.dart';
 import 'package:home_stock/services/database.dart';
+import 'package:home_stock/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
+
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class Home extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.settings),
               tooltip: 'Settings',
-              onPressed: () {},
+              onPressed: () async {await _auth.signOut();},
             ),
           ],
         ),
