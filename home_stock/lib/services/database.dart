@@ -71,4 +71,11 @@ class DatabaseService {
     });
   }
 
+  // Add or Remove item from shopping list
+  Future addOrRemoveFromShoppingList(String name, int val) async{
+    return await itemCollection.document(uid).updateData({
+      '$name.inShoppingList': val
+    });
+  }
+
 }
