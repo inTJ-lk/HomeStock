@@ -16,15 +16,6 @@ class Wrapper extends StatelessWidget {
       return Authenticate();
     }
     else{
-      // return Container(
-      //   child: FlatButton.icon(
-      //     onPressed: () async {
-      //       await _auth.signOut();
-      //     }, 
-      //     icon: Icon(Icons.person), 
-      //     label: Text('logout', style: TextStyle(color: Colors.white),)
-      //   )
-      // );
       return StreamProvider<UserData>.value(
         value: DatabaseService(uid: user.uid).userData,
         child: Home(),
