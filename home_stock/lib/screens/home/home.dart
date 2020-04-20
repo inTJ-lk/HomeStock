@@ -4,6 +4,7 @@ import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/home/addItem.dart';
 import 'package:home_stock/screens/home/itemList.dart';
+import 'package:home_stock/screens/settings/settings.dart';
 import 'package:home_stock/screens/shoppingList/shoppingList.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:home_stock/services/auth.dart';
@@ -100,7 +101,17 @@ class _HomeState extends State<Home> {
               IconButton(
                 icon: Icon(Icons.settings),
                 tooltip: 'Settings',
-                onPressed: () async {await _auth.signOut();},
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => 
+                      StreamProvider<UserData>.value(
+                        value: DatabaseService(uid: listForUser.uid).userData,
+                        child: Settings()
+                      )
+                    ),
+                  );
+                },
               ),
             ],
           ),
