@@ -20,6 +20,8 @@ class ItemList extends StatefulWidget{
 
 class _ItemListState extends State<ItemList>{
 
+  String _searchString;
+
   @override
   Widget build(BuildContext context){
 
@@ -34,12 +36,21 @@ class _ItemListState extends State<ItemList>{
       i = i.where((item) => item.category == widget.type).toList();
     }
 
+    _searchString = _searchString ?? null;
+
+    if(_searchString != null){
+      i = i.where((item) => item.name.toLowerCase().contains(_searchString.toLowerCase())).toList();
+    }
+
     return Column(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(50.0, 8.0, 50.0, 8.0),
           child: TextFormField(
-            onChanged: null,
+            autofocus: false,
+            onChanged: (value){setState(() {
+              _searchString = value;
+            });},
             decoration: InputDecoration(
               hintText: 'Search'
             ),

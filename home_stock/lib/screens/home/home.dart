@@ -56,61 +56,64 @@ class _HomeState extends State<Home> {
 
     return StreamProvider<List<Item>>.value(
       value: DatabaseService(uid: listForUser.items).itemData,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('HomeStock'),
-          centerTitle: true,
-          elevation: 0.0,
-          leading: PopupMenuButton<Choice>(
-            // gets the index of the selected category to highlight the category
-            initialValue: choices[choices.indexWhere((item) => item.title == _type)],
-            onSelected: (value) {setState(() {
-              _type = value.title;
-            });},
-            itemBuilder: (BuildContext context) {
-              return choices.map((Choice choice) {
-                return PopupMenuItem<Choice>(
-                  value: choice,
-                  child: Text(choice.title),
-                );
-              }).toList();
-            }
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.shopping_basket),
-              tooltip: 'Shopping List',
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => 
-                    StreamProvider<List<Item>>.value(
-                      value: DatabaseService(uid: listForUser.items).itemData,
-                      child: StreamProvider<UserData>.value(
-                        value: DatabaseService(uid: listForUser.items).userData,
-                        child: ShoppingList()
+      child: new GestureDetector(
+        onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('HomeStock'),
+            centerTitle: true,
+            elevation: 0.0,
+            leading: PopupMenuButton<Choice>(
+              // gets the index of the selected category to highlight the category
+              initialValue: choices[choices.indexWhere((item) => item.title == _type)],
+              onSelected: (value) {setState(() {
+                _type = value.title;
+              });},
+              itemBuilder: (BuildContext context) {
+                return choices.map((Choice choice) {
+                  return PopupMenuItem<Choice>(
+                    value: choice,
+                    child: Text(choice.title),
+                  );
+                }).toList();
+              }
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.shopping_basket),
+                tooltip: 'Shopping List',
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => 
+                      StreamProvider<List<Item>>.value(
+                        value: DatabaseService(uid: listForUser.items).itemData,
+                        child: StreamProvider<UserData>.value(
+                          value: DatabaseService(uid: listForUser.items).userData,
+                          child: ShoppingList()
+                        )
                       )
-                    )
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.settings),
-              tooltip: 'Settings',
-              onPressed: () async {await _auth.signOut();},
-            ),
-          ],
+                    ),
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.settings),
+                tooltip: 'Settings',
+                onPressed: () async {await _auth.signOut();},
+              ),
+            ],
+          ),
+          // Type is passed to the item list to get the relavant category 
+          body: ItemList(type: _type),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              _showAddItemPanel();
+            },
+            child: Icon(Icons.add),
+            backgroundColor: Colors.blue,
+          ), 
         ),
-        // Type is passed to the item list to get the relavant category 
-        body: ItemList(type: _type),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _showAddItemPanel();
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.blue,
-        ), 
       ),
     );
   }
