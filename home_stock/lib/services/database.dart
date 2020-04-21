@@ -78,4 +78,11 @@ class DatabaseService {
     });
   }
 
+  // Function to update stock
+  Future updateStock(String name, int quantity) async{
+    return await itemCollection.document(uid).updateData({
+      '$name.quantity': quantity
+    });
+  }
+
 }
