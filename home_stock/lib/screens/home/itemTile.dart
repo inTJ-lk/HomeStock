@@ -20,7 +20,7 @@ class ItemTile extends StatelessWidget {
 
     void _showStockingDialog(String title, String uid){
       showDialog(context: context, barrierDismissible: true, builder: (context){
-        return UpdateStock(title: title, name: item.name, quantity: item.quantity, uid: uid,);
+        return UpdateStock(title: title, name: item.name, quantity: item.quantity, uid: uid, metric: item.metric,);
       });
     }
 
@@ -188,7 +188,6 @@ class Choice {
 }
 
 const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Restock'),
   const Choice(title: 'Add to Shopping List'),
   const Choice(title: 'Remove from Shopping List'),
   const Choice(title: 'Edit'),

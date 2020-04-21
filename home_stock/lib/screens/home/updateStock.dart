@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:home_stock/services/database.dart';
-import 'package:provider/provider.dart';
-import 'package:home_stock/models/user.dart';
 
 class UpdateStock extends StatefulWidget {
 
   final String title;
   final String name;
   final String uid;
+  final String metric;
   final int quantity;
 
-  UpdateStock({this.title, this.name, this.uid, this.quantity});
+  UpdateStock({this.title, this.name, this.uid, this.quantity, this.metric});
 
   @override
   _UpdateStockState createState() => _UpdateStockState();
@@ -36,7 +35,7 @@ class _UpdateStockState extends State<UpdateStock> {
               children: <Widget>[
                 SizedBox(height: 12.0),
                 Text(
-                  'Enter quantity to ${widget.title}',
+                  'Enter quantity (in ${widget.metric}) to ${widget.title}',
                   style: TextStyle(color: Colors.black, fontSize: 16.0),
                 ),
                 SizedBox(height: 12.0),
