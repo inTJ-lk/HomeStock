@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/home/editItem.dart';
+import 'package:home_stock/screens/home/updateStock.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -9,12 +10,19 @@ class ItemTile extends StatelessWidget {
 
   final Item item;
 
+
   ItemTile({this.item});
 
   @override
   Widget build(BuildContext context) {
 
     final listForUser = Provider.of<UserData>(context);
+
+    void _showStockingDialog(String title, String uid){
+      showDialog(context: context, barrierDismissible: true, builder: (context){
+        return UpdateStock(title: title, name: item.name, quantity: item.quantity, uid: uid, metric: item.metric,);
+      });
+    }
 
     void _showEditItemPanel(value){
       showModalBottomSheet(context: context, isScrollControlled: true ,builder: (context){
@@ -118,7 +126,37 @@ class ItemTile extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 0.0),
         child: ListTile(
-          title: Text('${item.name} - ${item.quantity} ${item.metric}'),
+          title: Center(
+            child: Text(
+              '${item.name} - ${item.quantity} ${item.metric}',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          subtitle: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              FlatButton.icon(
+                onPressed: () {_showStockingDialog('Restock',listForUser.uid);}, 
+                icon: Icon(
+                  Icons.add_circle,
+                  color: Colors.green,
+                  size: 30,
+                ), 
+                label: Text('Restock')
+              ),
+              FlatButton.icon(
+                onPressed: () {_showStockingDialog('Destock',listForUser.uid);}, 
+                icon: Icon(
+                  Icons.do_not_disturb_on,
+                  color: Colors.red,
+                  size: 30,
+                ), 
+                label: Text('Destock')
+              ),
+            ],
+          ),
           trailing: PopupMenuButton<Choice>(
                       onSelected: (value) {_showEditItemPanel(value);},
                       itemBuilder: item.inShoppingList == 0 ? (BuildContext context) {
