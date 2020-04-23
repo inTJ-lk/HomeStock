@@ -47,11 +47,10 @@ class _SettingsState extends State<Settings> {
           ),
           SizedBox(height: 20.0),
           Text(
-            'Account',
+            'Account Settings',
             style: TextStyle(fontSize: 18.0),
           ),
-          Container(
-            height: 170.0,
+          Expanded(
             child: ListView(
               padding: const EdgeInsets.all(8.0),
               children: <Widget>[
@@ -60,22 +59,30 @@ class _SettingsState extends State<Settings> {
                   title: Text('Change Email'),
                   onTap: (){print('fuck');},
                 ),
+                Divider(color: Colors.black),
                 ListTile(
                   leading: Icon(Icons.lock),
                   title: Text('Change Password'),
                 ),
+                Divider(color: Colors.black),
                 ListTile(
                   leading: Icon(Icons.delete),
                   title: Text('Clear Data'),
                 ),
+                Divider(color: Colors.black),
+                ListTile(
+                  leading: Icon(Icons.share),
+                  title: Text('Share Inventory')
+                ),
+                Divider(color: Colors.black),
+                ListTile(
+                  leading: Icon(Icons.help),
+                  title: Text('Help and Support')
+                ),
               ],
             ),
           ),
-          SizedBox(height: 20.0),
-          Text(
-            'Share Inventory',
-            style: TextStyle(fontSize: 18.0),
-          ),
+          Text('Developed by inTJ Solutions'),
         ],
       ),
     );
