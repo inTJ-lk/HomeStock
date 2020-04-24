@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:home_stock/services/auth.dart';
+import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
@@ -17,6 +18,36 @@ class _SettingsState extends State<Settings> {
 
     final user = Provider.of<User>(context);
     final listForUser = Provider.of<UserData>(context);
+
+    // Delete the whole inventory
+    void _showClearItemPanel(){
+      showModalBottomSheet(context: context, isScrollControlled: true ,builder: (context){
+        return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Inventory data will be Permanently removed',
+                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20.0),
+                RaisedButton(
+                  color: Colors.red,
+                  child: Text(
+                    'Delete',
+                    style: TextStyle(color: Colors.white)
+                  ),
+                  onPressed: () async {
+                    await DatabaseService(uid: listForUser.items).deleteInventory();
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +88,6 @@ class _SettingsState extends State<Settings> {
                 ListTile(
                   leading: Icon(Icons.email),
                   title: Text('Change Email'),
-                  onTap: (){print('fuck');},
                 ),
                 Divider(color: Colors.black),
                 ListTile(
@@ -68,6 +98,7 @@ class _SettingsState extends State<Settings> {
                 ListTile(
                   leading: Icon(Icons.delete),
                   title: Text('Clear Data'),
+                  onTap: (){_showClearItemPanel();},
                 ),
                 Divider(color: Colors.black),
                 ListTile(

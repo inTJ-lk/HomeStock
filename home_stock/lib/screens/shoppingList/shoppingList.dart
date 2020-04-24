@@ -54,7 +54,7 @@ class _ShoppingListState extends State<ShoppingList> {
                       itemCount: processedItems.length,
                       itemBuilder: (context, index) {
                         return StreamProvider<UserData>.value(
-                          value: DatabaseService(uid: listForUser.uid).userData,
+                          value: DatabaseService(uid: listForUser.items).userData,
                           child: ItemTile(item: processedItems[index]));
                       },
                     ),
