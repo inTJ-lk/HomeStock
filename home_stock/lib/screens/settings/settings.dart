@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_stock/models/user.dart';
+import 'package:home_stock/screens/settings/shareInventory.dart';
 import 'package:home_stock/services/auth.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
@@ -103,7 +104,10 @@ class _SettingsState extends State<Settings> {
                 Divider(color: Colors.black),
                 ListTile(
                   leading: Icon(Icons.share),
-                  title: Text('Share Inventory')
+                  title: Text('Share Inventory'),
+                  onTap: () async{
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShareInventory()));
+                  },
                 ),
                 Divider(color: Colors.black),
                 ListTile(
