@@ -59,9 +59,18 @@ class DatabaseService {
 
   // Function to add and update item data
   Future updateItemData(String name, String category, int quantity, String metric, int inShoppingList) async{
-    return await itemCollection.document(uid).updateData({
-      name: {'name': name, 'category': category, 'metric': metric, 'quantity': quantity, 'inShoppingList': inShoppingList}
-    });
+    try{
+      return await itemCollection.document(uid).updateData({
+        name: {'name': name, 'category': category, 'metric': metric, 'quantity': quantity, 'inShoppingList': inShoppingList}
+      });
+    }catch(e){
+      if(e.toString().contains('No document to update')){
+        return await itemCollection.document(uid).setData({
+          name: {'name': name, 'category': category, 'metric': metric, 'quantity': quantity, 'inShoppingList': inShoppingList}
+        });
+      }
+    }
+    
   }
 
   // Function to delete an item from a document
@@ -83,6 +92,11 @@ class DatabaseService {
     return await itemCollection.document(uid).updateData({
       '$name.quantity': quantity
     });
+  }
+
+  // Delete Inventory data
+  Future deleteInventory() async {
+    return await itemCollection.document(uid).delete();
   }
 
 }

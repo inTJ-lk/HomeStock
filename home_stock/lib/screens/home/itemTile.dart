@@ -33,7 +33,7 @@ class ItemTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 StreamProvider<UserData>.value(
-                  value: DatabaseService(uid: listForUser.uid).userData,
+                  value: DatabaseService(uid: listForUser.items).userData,
                   child: EditItem(item: item)
                 ),
               ],
@@ -58,7 +58,7 @@ class ItemTile extends StatelessWidget {
                   ),
                   onPressed: () async {
                     int val = item.inShoppingList == 1 ? 0 : 1;
-                    await DatabaseService(uid: listForUser.uid).addOrRemoveFromShoppingList(item.name, val);
+                    await DatabaseService(uid: listForUser.items).addOrRemoveFromShoppingList(item.name, val);
                     Navigator.pop(context);
                   },
                 ),
@@ -84,7 +84,7 @@ class ItemTile extends StatelessWidget {
                   ),
                   onPressed: () async {
                     int val = item.inShoppingList == 1 ? 0 : 1;
-                    await DatabaseService(uid: listForUser.uid).addOrRemoveFromShoppingList(item.name, val);
+                    await DatabaseService(uid: listForUser.items).addOrRemoveFromShoppingList(item.name, val);
                     Navigator.pop(context);
                   },
                 ),
@@ -109,7 +109,7 @@ class ItemTile extends StatelessWidget {
                     style: TextStyle(color: Colors.white)
                   ),
                   onPressed: () async {
-                    await DatabaseService(uid: listForUser.uid).deleteItem(item.name);
+                    await DatabaseService(uid: listForUser.items).deleteItem(item.name);
                     Navigator.pop(context);
                   },
                 ),
@@ -138,7 +138,7 @@ class ItemTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               FlatButton.icon(
-                onPressed: () {_showStockingDialog('Restock',listForUser.uid);}, 
+                onPressed: () {_showStockingDialog('Restock',listForUser.items);}, 
                 icon: Icon(
                   Icons.add_circle,
                   color: Colors.green,
@@ -147,7 +147,7 @@ class ItemTile extends StatelessWidget {
                 label: Text('Restock')
               ),
               FlatButton.icon(
-                onPressed: () {_showStockingDialog('Destock',listForUser.uid);}, 
+                onPressed: () {_showStockingDialog('Destock',listForUser.items);}, 
                 icon: Icon(
                   Icons.do_not_disturb_on,
                   color: Colors.red,
