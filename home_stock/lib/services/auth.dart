@@ -70,4 +70,14 @@ class AuthService {
     }
   }
 
+  Future changeEmail(String email) async {
+    try {
+      dynamic user = await _auth.currentUser();
+      return await user.updateEmail(email);
+    } 
+    catch (e) {
+      return e;
+    }
+  }
+
 }

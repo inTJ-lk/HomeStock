@@ -26,9 +26,9 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[100],
+      backgroundColor: Colors.blue[100],
       appBar: AppBar(
-        backgroundColor: Colors.green[400],
+        backgroundColor: Colors.blue,
         elevation: 0.0,
         title: Text('Register to HomeStock'),
         actions: <Widget>[
@@ -102,7 +102,7 @@ class _RegisterState extends State<Register> {
                       }
                     }
                   },
-                  color: Colors.green[400],
+                  color: Colors.blue[400],
                   child: Text(
                     'Register',
                     style: TextStyle(color: Colors.white),
