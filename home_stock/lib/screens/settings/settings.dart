@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/settings/shareInventory.dart';
 import 'package:home_stock/services/auth.dart';
@@ -106,7 +107,17 @@ class _SettingsState extends State<Settings> {
                   leading: Icon(Icons.share),
                   title: Text('Share Inventory'),
                   onTap: () async{
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShareInventory()));
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder: (context) => 
+                        StreamProvider<List<Item>>.value(
+                          value: DatabaseService(uid: listForUser.items).itemData,
+                          child: StreamProvider<UserData>.value(
+                            value: DatabaseService(uid: listForUser.items).userData,
+                            child: ShareInventory()
+                          )
+                        )
+                      ),
+                    );
                   },
                 ),
                 Divider(color: Colors.black),
