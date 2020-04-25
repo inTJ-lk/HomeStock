@@ -13,6 +13,10 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
 
   final AuthService _auth = AuthService();
+  final _formKey1 = GlobalKey<FormState>();
+
+  String email = "";
+  String text = "";
   
   @override
   Widget build(BuildContext context) {
@@ -50,6 +54,76 @@ class _SettingsState extends State<Settings> {
       });
     }
 
+    void _showChangeEmailDialog(){
+      showDialog(context: context, barrierDismissible: true, builder: (context){
+        return AlertDialog(
+          title: Center(child: Text('Change Email')),
+          content: Form(
+            key: _formKey1,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(height: 12.0),
+                Text(
+                  'Enter New Email',
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),
+                ),
+                SizedBox(height: 12.0),
+                TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                ),
+                validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                onChanged: (val) {
+                  setState(() {
+                    email = val;
+                    text = "";
+                  });
+                },
+              ),
+              SizedBox(height: 12.0),
+              Text(
+                text,
+                style: TextStyle(color: Colors.red, fontSize: 14.0),
+              ),
+            ]
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Reset'),
+              onPressed: () async {
+                if(_formKey1.currentState.validate()) {
+                  print(email);
+                  dynamic result = await _auth.changeEmail(email);
+                  print(result);
+                  if(result == null) {
+                    Navigator.of(context).pop();
+                  }
+                  else {
+                    print('error');
+                    setState(() {
+                        text = 'Error Resetting Email';
+                    });
+                  }
+                }
+              },
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  email = "";
+                  text ="";
+                });
+              },
+            ),
+          ],
+        );
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('Settings')),
@@ -74,7 +148,7 @@ class _SettingsState extends State<Settings> {
                 backgroundImage: AssetImage('assets/user.png'),
               ),
               title: Text(listForUser.name.toUpperCase()),
-              subtitle: Text(user.email),
+              subtitle: Text(listForUser.email),
             ),
           ),
           SizedBox(height: 20.0),
@@ -89,6 +163,7 @@ class _SettingsState extends State<Settings> {
                 ListTile(
                   leading: Icon(Icons.email),
                   title: Text('Change Email'),
+                  onTap: (){_showChangeEmailDialog();},
                 ),
                 Divider(color: Colors.black),
                 ListTile(
