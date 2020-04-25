@@ -38,7 +38,7 @@ class AuthService {
       FirebaseUser user = result.user;
       
       //create new document for the user with uid
-      await DatabaseService(uid: user.uid).updateUserData(name);
+      await DatabaseService(uid: user.uid).updateUserData(name,email);
 
       await DatabaseService(uid: user.uid).createItemCollection();
       
@@ -73,7 +73,12 @@ class AuthService {
   Future changeEmail(String email) async {
     try {
       dynamic user = await _auth.currentUser();
-      return await user.updateEmail(email);
+
+      dynamic response = await user.updateEmail(email);
+
+      await DatabaseService(uid: user.uid).updateEmail(email);
+      
+      return response;
     } 
     catch (e) {
       return e;

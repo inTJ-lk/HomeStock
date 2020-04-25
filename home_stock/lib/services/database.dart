@@ -11,10 +11,11 @@ class DatabaseService {
   final CollectionReference userCollection = Firestore.instance.collection('users');
   final CollectionReference itemCollection = Firestore.instance.collection('items');
 
-  Future updateUserData(String name) async {
+  Future updateUserData(String name, String email) async {
     return await userCollection.document(uid).setData({
       'name': name,
-      'items': uid
+      'items': uid,
+      'email': email
     });
   }
 
@@ -48,7 +49,7 @@ class DatabaseService {
   // Stream to get user data from users collection
   Stream<UserData> get userData{
     return userCollection.document(uid).snapshots().map((item){
-      return UserData(name: item.data['name'], uid: uid, items: item.data['items']);
+      return UserData(name: item.data['name'], uid: uid, items: item.data['items'], email: item.data['email']);
     });
   }
 
@@ -97,6 +98,13 @@ class DatabaseService {
   // Delete Inventory data
   Future deleteInventory() async {
     return await itemCollection.document(uid).delete();
+  }
+
+  // Function to update user email
+  Future updateEmail(String email) async{
+    return await userCollection.document(uid).updateData({
+      'email' : email
+    });
   }
 
 }
