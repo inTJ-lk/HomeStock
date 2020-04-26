@@ -17,7 +17,8 @@ class _SettingsState extends State<Settings> {
   final AuthService _auth = AuthService();
   final _formKey1 = GlobalKey<FormState>();
 
-  String password = "";
+  String currentPassword = "";
+  String newPassword = "";
   String text = "";
   
   @override
@@ -74,7 +75,26 @@ class _SettingsState extends State<Settings> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        SizedBox(height: 20.0),
+                        Text(
+                          'Enter Current Password',
+                          style: TextStyle(color: Colors.black, fontSize: 16.0),
+                        ),
                         SizedBox(height: 12.0),
+                        TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Current Password',
+                        ),
+                        obscureText: true,
+                        validator: (val) => val.length < 6 ? 'Enter a password at least 6 charcters long' : null,
+                        onChanged: (val) {
+                          setState(() {
+                            currentPassword = val;
+                            text = "";
+                          });
+                        },
+                      ),
+                      SizedBox(height: 50.0),
                         Text(
                           'Enter New Password',
                           style: TextStyle(color: Colors.black, fontSize: 16.0),
@@ -82,13 +102,13 @@ class _SettingsState extends State<Settings> {
                         SizedBox(height: 12.0),
                         TextFormField(
                         decoration: InputDecoration(
-                          hintText: 'Password',
+                          hintText: 'New Password',
                         ),
                         obscureText: true,
                         validator: (val) => val.length < 6 ? 'Enter a password at least 6 charcters long' : null,
                         onChanged: (val) {
                           setState(() {
-                            password = val;
+                            newPassword = val;
                             text = "";
                           });
                         },
@@ -109,9 +129,7 @@ class _SettingsState extends State<Settings> {
                     ),
                     onPressed: () async {
                       if(_formKey1.currentState.validate()) {
-                        print(password);
-                        dynamic result = await _auth.changePassword(password);
-                        print(result);
+                        dynamic result = await _auth.changePassword(currentPassword,newPassword);
                         if(result == null) {
                           Navigator.of(context).pop();
                         }

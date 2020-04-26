@@ -85,15 +85,23 @@ class AuthService {
     }
   }
 
-  Future changePassword(String password) async {
+  Future changePassword(String currentPassword, String newPassword) async {
     try {
-      dynamic user = await _auth.currentUser();
-
-      dynamic response = await user.updatePassword(password);
+      FirebaseUser user = await _auth.currentUser();
+      AuthResult result = await _auth.signInWithEmailAndPassword(email: user.email, password: currentPassword);
       
-      return response;
+      //AuthCredential credential = EmailAuthProvider.getCredential(email: user.email, password: currentPassword);
+
+      //AuthResult authResult = await user.reauthenticateWithCredential(credential);
+
+      user =  await _auth.currentUser();
+
+      return await user.updatePassword(newPassword);
+      
     } 
-    catch (e) {
+    catch (e,s) {
+      print(e);
+      print(s);
       return e;
     }
   }
