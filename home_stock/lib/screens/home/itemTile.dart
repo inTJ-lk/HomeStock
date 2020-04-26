@@ -126,16 +126,20 @@ class ItemTile extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 0.0),
         child: ListTile(
+          leading: CircleAvatar(
+            radius: 25.0,
+            backgroundImage: AssetImage('assets/${item.category}.png'),
+          ),
           title: Center(
             child: Text(
               '${item.name} - ${item.quantity} ${item.metric}',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          subtitle: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               SizedBox(height: 20.0),
               FlatButton.icon(
@@ -143,7 +147,7 @@ class ItemTile extends StatelessWidget {
                 icon: Icon(
                   Icons.add_circle,
                   color: Colors.green[400],
-                  size: 30,
+                  size: 26,
                 ), 
                 label: Text('Restock')
               ),
@@ -152,7 +156,7 @@ class ItemTile extends StatelessWidget {
                 icon: Icon(
                   Icons.do_not_disturb_on,
                   color: Colors.red[400],
-                  size: 30,
+                  size: 26,
                 ), 
                 label: Text('Destock')
               ),
