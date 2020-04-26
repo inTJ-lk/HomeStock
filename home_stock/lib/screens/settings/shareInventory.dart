@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_stock/models/user.dart';
+import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
 
 class ShareInventory extends StatefulWidget {
@@ -50,7 +51,41 @@ class _ShareInventoryState extends State<ShareInventory> {
                   ),
                   onPressed: () async {
                     // await DatabaseService(uid: listForUser.items).deleteInventory();
+                    dynamic i = await DatabaseService(uid: listForUser.items).shareInventory(email);
                     Navigator.pop(context);
+                    if(i.toString() == "Exception"){
+                      showDialog(context: context, barrierDismissible: true, builder: (context){
+                        return AlertDialog(
+                          content: Container(
+                            child: Text('Invalid email address $email, Make sure the email is registered with the system'),
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Dismiss'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                    }else{
+                      showDialog(context: context, barrierDismissible: true, builder: (context){
+                        return AlertDialog(
+                          content: Container(
+                            child: Text('Invitation sent successfully. Inventory will be shared once $email accepts your request'),
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Dismiss'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                    }
                   },
                 ),
               ],

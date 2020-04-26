@@ -42,7 +42,7 @@ class _AddItemState extends State<AddItem> {
               'Add Item',
               style: TextStyle(fontSize: 18.0),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             TextFormField(
               decoration: InputDecoration(hintText: 'Item Name'),
               validator: (val) => val.isEmpty ? 'Please enter a Name' : null,

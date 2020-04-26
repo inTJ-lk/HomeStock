@@ -149,7 +149,7 @@ class _SettingsState extends State<Settings> {
                 backgroundImage: AssetImage('assets/user.png'),
               ),
               title: Text(listForUser.name.toUpperCase()),
-              subtitle: Text(listForUser.email),
+              subtitle: Text(user.email),
             ),
           ),
           SizedBox(height: 20.0),
