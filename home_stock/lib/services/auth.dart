@@ -85,4 +85,17 @@ class AuthService {
     }
   }
 
+  Future changePassword(String password) async {
+    try {
+      dynamic user = await _auth.currentUser();
+
+      dynamic response = await user.updatePassword(password);
+      
+      return response;
+    } 
+    catch (e) {
+      return e;
+    }
+  }
+
 }

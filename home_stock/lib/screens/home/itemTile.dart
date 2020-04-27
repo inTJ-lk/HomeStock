@@ -18,8 +18,8 @@ class ItemTile extends StatelessWidget {
 
     final listForUser = Provider.of<UserData>(context);
 
-    void _showStockingDialog(String title, String uid){
-      showDialog(context: context, barrierDismissible: true, builder: (context){
+    void _showStockingPanel(String title, String uid){
+      showModalBottomSheet(context: context, isScrollControlled: true ,builder: (context){
         return UpdateStock(title: title, name: item.name, quantity: item.quantity, uid: uid, metric: item.metric,);
       });
     }
@@ -126,55 +126,60 @@ class ItemTile extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 0.0),
         child: ListTile(
+          leading: CircleAvatar(
+            radius: 25.0,
+            backgroundImage: AssetImage('assets/${item.category}.png'),
+          ),
           title: Center(
             child: Text(
               '${item.name} - ${item.quantity} ${item.metric}',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           ),
           subtitle: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
+              SizedBox(height: 20.0),
               FlatButton.icon(
-                onPressed: () {_showStockingDialog('Restock',listForUser.items);}, 
+                onPressed: () {_showStockingPanel('Restock',listForUser.items);}, 
                 icon: Icon(
                   Icons.add_circle,
-                  color: Colors.green,
-                  size: 30,
+                  color: Colors.green[400],
+                  size: 26,
                 ), 
                 label: Text('Restock')
               ),
               FlatButton.icon(
-                onPressed: () {_showStockingDialog('Destock',listForUser.items);}, 
+                onPressed: () {_showStockingPanel('Destock',listForUser.items);}, 
                 icon: Icon(
                   Icons.do_not_disturb_on,
-                  color: Colors.red,
-                  size: 30,
+                  color: Colors.red[400],
+                  size: 26,
                 ), 
                 label: Text('Destock')
               ),
             ],
           ),
           trailing: PopupMenuButton<Choice>(
-                      onSelected: (value) {_showEditItemPanel(value);},
-                      itemBuilder: item.inShoppingList == 0 ? (BuildContext context) {
-                        return choices.where((i) => i.title != 'Remove from Shopping List').toList().map((Choice choice) {
-                          return PopupMenuItem<Choice>(
-                            value: choice,
-                            child: Text(choice.title),
-                          );
-                        }).toList();
-                      } : (BuildContext context) {
-                        return choices.where((i) => i.title != 'Add to Shopping List').toList().map((Choice choice) {
-                          return PopupMenuItem<Choice>(
-                            value: choice,
-                            child: Text(choice.title),
-                          );
-                        }).toList();
-                      }
-                    ),
+            onSelected: (value) {_showEditItemPanel(value);},
+            itemBuilder: item.inShoppingList == 0 ? (BuildContext context) {
+              return choices.where((i) => i.title != 'Remove from Shopping List').toList().map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  child: Text(choice.title),
+                );
+              }).toList();
+            } : (BuildContext context) {
+              return choices.where((i) => i.title != 'Add to Shopping List').toList().map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  child: Text(choice.title),
+                );
+              }).toList();
+            }
+          ),
         ),
       ),
     );
