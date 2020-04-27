@@ -47,7 +47,7 @@ class _EditItemState extends State<EditItem> {
               'Edit Item',
               style: TextStyle(fontSize: 18.0),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             TextFormField(
               initialValue: _name ?? 'Name',
               validator: (val) => val.isEmpty ? 'Please enter a Name' : null,
