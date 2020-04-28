@@ -34,7 +34,7 @@ class _SignInState extends State<SignIn> {
       });
     }
 
-    return Scaffold(
+    return  loading ? Loading() : Scaffold(
       backgroundColor: Colors.blue[100],
       appBar: AppBar(
         backgroundColor: Colors.blue,
