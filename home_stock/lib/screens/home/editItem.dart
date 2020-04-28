@@ -40,7 +40,7 @@ class _EditItemState extends State<EditItem> {
     _metric = _metric ?? widget.item.metric;
     _quantity = _quantity ?? widget.item.quantity;
 
-    return  new SystemPadding(
+    return loading ? Loading() : new SystemPadding(
       child: Form(
         key: _formKey,
         child: Column(
@@ -51,6 +51,7 @@ class _EditItemState extends State<EditItem> {
             ),
             SizedBox(height: 10.0),
             TextFormField(
+              enabled: false,
               initialValue: _name ?? 'Name',
               validator: (val) => val.isEmpty ? 'Please enter a Name' : null,
               onChanged: (val) => setState(() => _name = val),
@@ -95,7 +96,7 @@ class _EditItemState extends State<EditItem> {
                   setState(() {
                     loading = true;
                   });
-                  dynamic result = await DatabaseService(uid: listForUser.uid).updateItemData(_name, _category, _quantity, _metric, widget.item.inShoppingList);
+                  dynamic result = await DatabaseService(uid: listForUser.items).updateItemData(_name, _category, _quantity, _metric, widget.item.inShoppingList);
                   if(result == null){
                     setState(() {
                       loading = false;
