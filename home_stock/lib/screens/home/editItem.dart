@@ -1,8 +1,8 @@
-// import 'package:employee_activity_tracker/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
+import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/screens/shared/systemPadding.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +23,8 @@ class _EditItemState extends State<EditItem> {
   final List<String> categories = ['Fresh Food', 'Dry Food', 'Grocery', 'Household', 'Other'];
   final List<String> metrics = ['Grams', 'Kilograms', 'Milliliters', 'Liters', 'Packets', 'Tins', 'Other'];
 
+  bool loading = false;
+
   String _name;
   String _category;
   String _metric;
@@ -38,7 +40,7 @@ class _EditItemState extends State<EditItem> {
     _metric = _metric ?? widget.item.metric;
     _quantity = _quantity ?? widget.item.quantity;
 
-    return new SystemPadding(
+    return  new SystemPadding(
       child: Form(
         key: _formKey,
         child: Column(
@@ -90,8 +92,16 @@ class _EditItemState extends State<EditItem> {
               ),
               onPressed: () async {
                 if(_formKey.currentState.validate()){
-                  await DatabaseService(uid: listForUser.uid).updateItemData(_name, _category, _quantity, _metric, widget.item.inShoppingList);
-                  Navigator.pop(context);
+                  setState(() {
+                    loading = true;
+                  });
+                  dynamic result = await DatabaseService(uid: listForUser.uid).updateItemData(_name, _category, _quantity, _metric, widget.item.inShoppingList);
+                  if(result == null){
+                    setState(() {
+                      loading = false;
+                    });
+                    Navigator.pop(context);
+                  }
                 }
                 // Navigator.pop(context);
               },
