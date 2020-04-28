@@ -98,6 +98,13 @@ class _AddItemState extends State<AddItem> {
                     });
                     Navigator.pop(context);
                   }
+                  else{
+                    setState(() {
+                      loading = false;
+                    });
+
+                    //action for when the db function fails
+                  }
                 }
               },
             ),
