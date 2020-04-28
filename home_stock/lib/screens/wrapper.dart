@@ -17,7 +17,7 @@ class Wrapper extends StatelessWidget {
     }
     else{
       return StreamProvider<UserData>.value(
-        value: DatabaseService(uid: user.uid).userData,
+        value: DatabaseService(uid: user.email).userData,
         child: Home(),
       );
     }

@@ -12,15 +12,16 @@ class DatabaseService {
   final CollectionReference itemCollection = Firestore.instance.collection('items');
 
   Future updateUserData(String name, String email) async {
-    return await userCollection.document(uid).setData({
+    return await userCollection.document(email).setData({
       'name': name,
       'items': uid,
-      'email': email
+      'email': email,
+      'shared': null
     });
   }
 
-  Future createItemCollection() async {
-    return await itemCollection.document(uid).setData({
+  Future createItemCollection(String email) async {
+    return await itemCollection.document(email).setData({
       'Test Item': {'name':'Test Item', 'category': 'Fresh Food', 'metric': 'Kilograms', 'quantity': 2, 'inShoppingList': 0}
     });
   }
@@ -48,14 +49,24 @@ class DatabaseService {
 
   // Stream to get user data from users collection
   Stream<UserData> get userData{
-    return userCollection.document(uid).snapshots().map((item){
-      return UserData(name: item.data['name'], uid: uid, items: item.data['items'], email: item.data['email']);
-    });
+    try{
+      return userCollection.document(uid).snapshots().map((item){
+        return UserData(name: item.data['name'], uid: uid, items: item.data['items'], email: item.data['email'], shared: item.data['shared']);
+      });
+    }catch(e){
+      return null;
+    }
+    
   }
 
   // Stream to get item data of a user from items collection
   Stream <List<Item>> get itemData{
-    return itemCollection.document(uid).snapshots().map(_itemDataFromSnapshot);
+    try{
+      return itemCollection.document(uid).snapshots().map(_itemDataFromSnapshot);
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
   }
 
   // Function to add and update item data
@@ -105,6 +116,34 @@ class DatabaseService {
     return await userCollection.document(uid).updateData({
       'email' : email
     });
+  }
+
+  // Function to share inventory 
+  // Shared field is updated in both the accounts
+  // items list is updated in the account to be shared
+  Future shareInventory(String email) async{
+    try{
+
+      var receiverName =  await userCollection.document(email).get().then((document) {
+                        return document.data['name'];
+                  });
+
+      var requesterName =  await userCollection.document(uid).get().then((document) {
+                        return document.data['name'];
+                  });            
+
+      await userCollection.document(email).updateData({
+        'items' : uid,
+        'shared' : FieldValue.arrayUnion([{'uid' : uid,'name' : requesterName}])
+      });
+
+      return await userCollection.document(uid).updateData({
+        'shared' : FieldValue.arrayUnion([{'uid' : email,'name' : receiverName}])
+      });
+    }catch(e){
+      // print(e.toString());
+      return 'Exception';
+    }
   }
 
 }
