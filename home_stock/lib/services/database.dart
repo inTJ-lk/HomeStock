@@ -51,11 +51,9 @@ class DatabaseService {
   Stream<UserData> get userData{
     try{
       return userCollection.document(uid).snapshots().map((item){
-        return UserData(name: item.data['name'], uid: uid, items: item.data['items'], email: item.data['email']);
+        return UserData(name: item.data['name'], uid: uid, items: item.data['items'], email: item.data['email'], shared: item.data['shared']);
       });
     }catch(e){
-      print('fudge');
-      print(e.toString());
       return null;
     }
     
@@ -120,15 +118,27 @@ class DatabaseService {
     });
   }
 
+  // Function to share inventory 
+  // Shared field is updated in both the accounts
+  // items list is updated in the account to be shared
   Future shareInventory(String email) async{
     try{
+
+      var receiverName =  await userCollection.document(email).get().then((document) {
+                        return document.data['name'];
+                  });
+
+      var requesterName =  await userCollection.document(uid).get().then((document) {
+                        return document.data['name'];
+                  });            
+
       await userCollection.document(email).updateData({
         'items' : uid,
-        'shared' : FieldValue.arrayUnion([uid])
+        'shared' : FieldValue.arrayUnion([{'uid' : uid,'name' : requesterName}])
       });
 
       return await userCollection.document(uid).updateData({
-        'shared' : FieldValue.arrayUnion([email])
+        'shared' : FieldValue.arrayUnion([{'uid' : email,'name' : receiverName}])
       });
     }catch(e){
       // print(e.toString());

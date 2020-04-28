@@ -127,7 +127,8 @@ class ItemTile extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 0.0),
         child: ListTile(
           leading: CircleAvatar(
-            radius: 25.0,
+            radius: 20.0,
+            backgroundColor: Colors.white,
             backgroundImage: AssetImage('assets/${item.category}.png'),
           ),
           title: Center(
