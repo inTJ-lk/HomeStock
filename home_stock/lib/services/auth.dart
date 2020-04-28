@@ -99,9 +99,7 @@ class AuthService {
       return await user.updatePassword(newPassword);
       
     } 
-    catch (e,s) {
-      print(e);
-      print(s);
+    catch (e) {
       return e;
     }
   }
