@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:home_stock/screens/shared/systemPadding.dart';
 
@@ -20,6 +21,8 @@ class _UpdateStockState extends State<UpdateStock> {
 
   final _formKey = GlobalKey<FormState>();
 
+  bool loading = false;
+
   int _quantity;
   String error = "";
   
@@ -27,7 +30,7 @@ class _UpdateStockState extends State<UpdateStock> {
   @override
   Widget build(BuildContext context) {
 
-    return SystemPadding(
+    return loading ? Loading() :SystemPadding(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
         child: Column(
@@ -73,6 +76,9 @@ class _UpdateStockState extends State<UpdateStock> {
               ),
               onPressed: () async {
                 if(_formKey.currentState.validate()) {
+                  setState(() {
+                    loading = true;
+                  });
                   if(widget.title == 'Restock'){
                     _quantity = widget.quantity + _quantity;
                   }
@@ -82,8 +88,20 @@ class _UpdateStockState extends State<UpdateStock> {
                   print(_quantity);
                   print(widget.uid);
                   print(widget.name);
-                  await DatabaseService(uid: widget.uid).updateStock(widget.name, _quantity);
-                  Navigator.of(context).pop();
+                  dynamic result = await DatabaseService(uid: widget.uid).updateStock(widget.name, _quantity);
+                  if(result == null){
+                    setState(() {
+                      loading = false;
+                    });
+                    Navigator.of(context).pop();
+                  }
+                  else{
+                    setState(() {
+                      loading = false;
+                    });
+
+                    //action for when the db function fails
+                  }
                 }
               }
             ),
