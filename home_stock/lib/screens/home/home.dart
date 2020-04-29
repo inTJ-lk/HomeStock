@@ -5,6 +5,7 @@ import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/home/addItem.dart';
 import 'package:home_stock/screens/home/itemList.dart';
 import 'package:home_stock/screens/settings/settings.dart';
+import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/screens/shoppingList/shoppingList.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:home_stock/services/auth.dart';
@@ -55,7 +56,7 @@ class _HomeState extends State<Home> {
       });
     }    
 
-    return StreamProvider<List<Item>>.value(
+    return listForUser != null ? StreamProvider<List<Item>>.value(
       value: DatabaseService(uid: listForUser.items).itemData,
       child: new GestureDetector(
         onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
@@ -149,7 +150,7 @@ class _HomeState extends State<Home> {
           ), 
         ),
       ),
-    );
+    ) : Loading();
   }
 }
 

@@ -66,7 +66,8 @@ class _SettingsState extends State<Settings> {
       });
     }
 
-    return Scaffold(
+    return listForUser != null && user != null ?
+    Scaffold(
       appBar: AppBar(
         title: Center(child: Text('Settings')),
         actions: <Widget>[
@@ -148,6 +149,6 @@ class _SettingsState extends State<Settings> {
           Text('Developed by inTJ Solutions'),
         ],
       ),
-    );
-  }
+    ) : Loading();
+  } 
 }

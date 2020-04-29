@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_stock/models/user.dart';
+import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -156,7 +157,7 @@ class _ShareInventoryState extends State<ShareInventory> {
       });
     }
 
-    return new GestureDetector(
+    return listForUser != null ? new GestureDetector(
       onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
       child: Scaffold(
         appBar: AppBar(
@@ -234,6 +235,6 @@ class _ShareInventoryState extends State<ShareInventory> {
         ),
         
       ),
-    );
+    ) : Loading();
   }
 }
