@@ -90,7 +90,7 @@ class _EditItemState extends State<EditItem> {
               ),
               onPressed: () async {
                 if(_formKey.currentState.validate()){
-                  await DatabaseService(uid: listForUser.uid).updateItemData(_name, _category, _quantity, _metric, widget.item.inShoppingList);
+                  await DatabaseService(uid: listForUser.email).updateItemData(_name, _category, _quantity, _metric, widget.item.inShoppingList);
                   Navigator.pop(context);
                 }
                 // Navigator.pop(context);

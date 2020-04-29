@@ -30,6 +30,39 @@ class _ShareInventoryState extends State<ShareInventory> {
         return false;
     }
 
+    void _showDeleteConfirmationPanel(email, name){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Are you sure you want to remove $email?',
+                style: TextStyle(fontSize: 18.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.red,
+                child: Text(
+                  'Remove',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  await DatabaseService(uid: listForUser.email).removeFromSharingInventory(email, name);
+                  setState(() {
+                    _email = "";
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
+
     void _showConfirmationPanel(email){
       showModalBottomSheet(context: context, isScrollControlled: true ,builder: (context){
         if(validateEmail(email) == true){
@@ -79,6 +112,9 @@ class _ShareInventoryState extends State<ShareInventory> {
                             FlatButton(
                               child: Text('Dismiss'),
                               onPressed: () {
+                                setState(() {
+                                  _email = "";
+                                });
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -119,6 +155,7 @@ class _ShareInventoryState extends State<ShareInventory> {
         
       });
     }
+
     return new GestureDetector(
       onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
       child: Scaffold(
@@ -184,7 +221,9 @@ class _ShareInventoryState extends State<ShareInventory> {
                       subtitle: Text(listForUser.shared[index]['uid']),
                       trailing: IconButton(
                         icon: Icon(Icons.delete),
-                        onPressed: (){},
+                        onPressed: () async{
+                          _showDeleteConfirmationPanel(listForUser.shared[index]['uid'], listForUser.shared[index]['name']);
+                        },
                       ),
                     ),
                   );

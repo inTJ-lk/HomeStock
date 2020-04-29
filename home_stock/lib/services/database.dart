@@ -14,7 +14,7 @@ class DatabaseService {
   Future updateUserData(String name, String email) async {
     return await userCollection.document(email).setData({
       'name': name,
-      'items': uid,
+      'items': email,
       'email': email,
       'shared': null
     });
@@ -122,6 +122,7 @@ class DatabaseService {
   // Shared field is updated in both the accounts
   // items list is updated in the account to be shared
   Future shareInventory(String email) async{
+    
     try{
 
       var receiverName =  await userCollection.document(email).get().then((document) {
@@ -143,6 +144,27 @@ class DatabaseService {
     }catch(e){
       // print(e.toString());
       return 'Exception';
+    }
+  }
+
+  Future removeFromSharingInventory(String email, String name) async{
+    try{
+
+      var requesterName =  await userCollection.document(uid).get().then((document) {
+                        return document.data['name'];
+                  });
+
+      await userCollection.document(email).updateData({
+        'items' : email,
+        'shared' : FieldValue.arrayRemove([{'uid' : uid,'name' : requesterName}])
+      });
+
+      return await userCollection.document(uid).updateData({
+        'shared' : FieldValue.arrayRemove([{'uid' : email,'name' : name}])
+      });
+
+    }catch(e){
+      print(e.toString());
     }
   }
 
