@@ -4,6 +4,7 @@ import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/home/addItem.dart';
 import 'package:home_stock/screens/home/itemList.dart';
+import 'package:home_stock/screens/notifications/notifications.dart';
 import 'package:home_stock/screens/settings/settings.dart';
 import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/screens/shoppingList/shoppingList.dart';
@@ -63,7 +64,7 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           appBar: AppBar(
             title: Text('HomeStock'),
-            centerTitle: true,
+            //centerTitle: true,
             elevation: 0.0,
             // leading: PopupMenuButton<Choice>(
             //   // gets the index of the selected category to highlight the category
@@ -114,6 +115,16 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
+              IconButton(
+                icon: Icon(Icons.notifications),
+                tooltip: 'Notifications',
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Notifications()),
+                  );
+                },
+              )
             ],
           ),
           // Type is passed to the item list to get the relavant category 
