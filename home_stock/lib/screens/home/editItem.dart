@@ -55,6 +55,7 @@ class _EditItemState extends State<EditItem> {
               initialValue: _name ?? 'Name',
               validator: (val) => val.isEmpty ? 'Please enter a Name' : null,
               onChanged: (val) => setState(() => _name = val),
+              readOnly: true,
             ),
             SizedBox(height: 20.0),
             DropdownButtonFormField(

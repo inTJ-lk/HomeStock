@@ -32,14 +32,17 @@ class _ItemListState extends State<ItemList>{
     // if the passed type to the item list is not equal to All
     // item list is filtered according to the selected category 
     // else the list is not filtered hence items from all the categories will be displayed
-    if(widget.type != 'All' ){
-      i = i.where((item) => item.category == widget.type).toList();
-    }
+    
+    if(i.isNotEmpty){
+      if(widget.type != 'All' ){
+        i = i.where((item) => item.category == widget.type).toList();
+      }
 
-    _searchString = _searchString ?? null;
+      _searchString = _searchString ?? null;
 
-    if(_searchString != null){
-      i = i.where((item) => item.name.toLowerCase().contains(_searchString.toLowerCase())).toList();
+      if(_searchString != null){
+        i = i.where((item) => item.name.toLowerCase().contains(_searchString.toLowerCase())).toList();
+      }
     }
 
     return Column(
