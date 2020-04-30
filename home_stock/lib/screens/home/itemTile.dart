@@ -133,35 +133,38 @@ class ItemTile extends StatelessWidget {
           ),
           title: Center(
             child: Text(
-              '${item.name} - ${item.quantity} ${item.metric}',
+              '${item.name.toUpperCase()} - ${item.quantity} ${item.metric}',
               style: TextStyle(
                 fontSize: 18,
               ),
             ),
           ),
-          subtitle: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              SizedBox(height: 20.0),
-              FlatButton.icon(
-                onPressed: () {_showStockingPanel('Restock',listForUser.items);}, 
-                icon: Icon(
-                  Icons.add_circle,
-                  color: Colors.green[400],
-                  size: 26,
-                ), 
-                label: Text('Restock')
-              ),
-              FlatButton.icon(
-                onPressed: () {_showStockingPanel('Destock',listForUser.items);}, 
-                icon: Icon(
-                  Icons.do_not_disturb_on,
-                  color: Colors.red[400],
-                  size: 26,
-                ), 
-                label: Text('Destock')
-              ),
-            ],
+          subtitle: FittedBox(
+            fit: BoxFit.contain,
+              child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                SizedBox(height: 20.0),
+                FlatButton.icon(
+                  onPressed: () {_showStockingPanel('Restock',listForUser.items);}, 
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: Colors.green[400],
+                    size: 26,
+                  ), 
+                  label: Text('Restock')
+                ),
+                FlatButton.icon(
+                  onPressed: () {_showStockingPanel('Destock',listForUser.items);}, 
+                  icon: Icon(
+                    Icons.do_not_disturb_on,
+                    color: Colors.red[400],
+                    size: 26,
+                  ), 
+                  label: Text('Destock')
+                ),
+              ],
+            ),
           ),
           trailing: PopupMenuButton<Choice>(
             onSelected: (value) {_showEditItemPanel(value);},
