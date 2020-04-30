@@ -130,7 +130,7 @@ class _SettingsState extends State<Settings> {
                         StreamProvider<List<Item>>.value(
                           value: DatabaseService(uid: listForUser.items).itemData,
                           child: StreamProvider<UserData>.value(
-                            value: DatabaseService(uid: listForUser.items).userData,
+                            value: DatabaseService(uid: listForUser.email).userData,
                             child: ShareInventory()
                           )
                         )
