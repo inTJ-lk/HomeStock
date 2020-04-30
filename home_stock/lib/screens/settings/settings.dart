@@ -4,7 +4,6 @@ import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/settings/changePassword.dart';
 import 'package:home_stock/screens/settings/shareInventory.dart';
 import 'package:home_stock/screens/shared/loading.dart';
-import 'package:home_stock/screens/shared/systemPadding.dart';
 import 'package:home_stock/services/auth.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,6 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
 
   final AuthService _auth = AuthService();
-  final _formKey1 = GlobalKey<FormState>();
 
   String currentPassword = "";
   String newPassword = "";
