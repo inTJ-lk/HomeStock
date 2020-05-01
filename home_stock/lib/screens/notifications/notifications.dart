@@ -20,13 +20,11 @@ class _NotificationsState extends State<Notifications> {
     final user = Provider.of<User>(context);
     final listForUser = Provider.of<UserData>(context);
 
-    //final listForUser = Provider.of<UserData>(context);
 
     //List<Item> items = Provider.of<List<Item>>(context) ?? [];
     List<FirestoreNotification>notifications = [
       FirestoreNotification(timestamp: 'timestamp', title: 'title', message: 'message'),
       FirestoreNotification(timestamp: 'timestamp', title: 'Share Request', message: 'message')
-    ];
 
 
     return new GestureDetector(
