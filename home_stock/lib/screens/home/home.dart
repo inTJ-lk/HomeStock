@@ -121,7 +121,12 @@ class _HomeState extends State<Home> {
                 onPressed: () async {
                   await Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Notifications()),
+                    MaterialPageRoute(builder: (context) =>
+                      StreamProvider<UserData>.value(
+                        value: DatabaseService(uid: listForUser.uid).userData,
+                        child: Notifications()
+                      )
+                    ),
                   );
                 },
               )

@@ -38,7 +38,7 @@ class _ShoppingListState extends State<ShoppingList> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50.0, 8.0, 50.0, 8.0),
-                    child: TextFormField(
+                    child: processedItems == null ? TextFormField(
                       onChanged: (value){
                         setState(() {
                           _searchString = value;
@@ -47,7 +47,7 @@ class _ShoppingListState extends State<ShoppingList> {
                       decoration: InputDecoration(
                         hintText: 'Search'
                       ),
-                    ),
+                    ) : Text('No items in Shopping List'),
                   ),
                   Expanded(
                     child: ListView.builder(
