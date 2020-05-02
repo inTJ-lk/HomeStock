@@ -16,10 +16,38 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   String currentPassword = "";
   String newPassword = "";
-  String text = "";
 
   @override
   Widget build(BuildContext context) {
+    void _showFailedPanel(){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Failed Change Password',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text(
+                  'Dismiss',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
+
     return  loading ? Loading() : SystemPadding(
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
@@ -51,7 +79,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                         onChanged: (val) {
                           setState(() {
                             currentPassword = val;
-                            text = "";
                           });
                         },
                       ),
@@ -70,15 +97,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                         onChanged: (val) {
                           setState(() {
                             newPassword = val;
-                            text = "";
                           });
                         },
                       ),
                       SizedBox(height: 12.0),
-                      Text(
-                        text,
-                        style: TextStyle(color: Colors.red, fontSize: 14.0),
-                      ),
                     ]
                     ),
                   ),
@@ -104,10 +126,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                           setState(() {
                             loading = false;
                           });
-                          print('error');
-                          setState(() {
-                              text = 'Error Resetting Password';
-                          });
+                          Navigator.of(context).pop();
+                          _showFailedPanel();
                         }
                       }
                     },
