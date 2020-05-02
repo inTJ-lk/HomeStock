@@ -166,6 +166,7 @@ class DatabaseService {
 
     }catch(e){
       print(e.toString());
+      return 'Exception';
     }
   }
 
@@ -195,6 +196,7 @@ class DatabaseService {
 
     }catch(e){
       print(e);
+      return 'Exception';
     }
   }
 
@@ -215,6 +217,7 @@ class DatabaseService {
 
     }catch(e){
       print(e);
+      return 'Exception';
     }
   }
 
