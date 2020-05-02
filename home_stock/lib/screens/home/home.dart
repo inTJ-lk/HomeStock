@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           appBar: AppBar(
             title: Text('HomeStock'),
-            //centerTitle: true,
+            centerTitle: true,
             elevation: 0.0,
             // leading: PopupMenuButton<Choice>(
             //   // gets the index of the selected category to highlight the category
