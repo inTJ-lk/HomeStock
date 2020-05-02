@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
     final listForUser = Provider.of<UserData>(context);
 
     // Gets the new share requests to generate the badge count
-    var notifications = listForUser.shared.where((i) => i['status'] == 'request');
+    var notifications = listForUser != null ? listForUser.shared.where((i) => i['status'] == 'request'): 0;
 
     // When built is called repeatedly if type is not set(initial load) type is set to All
     _type = _type ?? 'All';
@@ -132,7 +132,7 @@ class _HomeState extends State<Home> {
                 return ListTile(
                   leading: CircleAvatar(
                     radius: 25.0,
-                    backgroundImage: AssetImage('assets/${choices[index].title}.png'),
+                    backgroundImage: AssetImage('assets/${choices[index].title.split(" ")[0]}.png'),
                   ),
                   title: Text(choices[index].title, style: TextStyle(fontSize: 17.0, fontWeight: choices[index].title == _type ? FontWeight.bold : null),),
                   subtitle: Text("  "),

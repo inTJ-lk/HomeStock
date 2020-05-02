@@ -129,7 +129,7 @@ class ItemTile extends StatelessWidget {
           leading: CircleAvatar(
             radius: 20.0,
             backgroundColor: Colors.white,
-            backgroundImage: AssetImage('assets/${item.category}.png'),
+            backgroundImage: AssetImage('assets/${item.category.split(" ")[0]}.png'),
           ),
           title: Center(
             child: Text(
