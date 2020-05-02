@@ -134,12 +134,11 @@ class DatabaseService {
                   });            
 
       await userCollection.document(email).updateData({
-        'items' : uid,
-        'shared' : FieldValue.arrayUnion([{'uid' : uid,'name' : requesterName}])
+        'shared' : FieldValue.arrayUnion([{'uid' : uid,'name' : requesterName,'status' : 'request'}])
       });
 
       return await userCollection.document(uid).updateData({
-        'shared' : FieldValue.arrayUnion([{'uid' : email,'name' : receiverName}])
+        'shared' : FieldValue.arrayUnion([{'uid' : email,'name' : receiverName, 'status' : 'pending'}])
       });
     }catch(e){
       // print(e.toString());
@@ -147,24 +146,75 @@ class DatabaseService {
     }
   }
 
-  Future removeFromSharingInventory(String email, String name) async{
+  Future removeFromSharingInventory(String email, String name, String status) async{
     try{
 
       var requesterName =  await userCollection.document(uid).get().then((document) {
                         return document.data['name'];
                   });
 
+      var requesterStatus = status == 'pending' ? 'request' : 'accepted';
+
       await userCollection.document(email).updateData({
         'items' : email,
-        'shared' : FieldValue.arrayRemove([{'uid' : uid,'name' : requesterName}])
+        'shared' : FieldValue.arrayRemove([{'uid' : uid,'name' : requesterName, 'status': requesterStatus}])
       });
 
       return await userCollection.document(uid).updateData({
-        'shared' : FieldValue.arrayRemove([{'uid' : email,'name' : name}])
+        'shared' : FieldValue.arrayRemove([{'uid' : email,'name' : name, 'status': status}])
       });
 
     }catch(e){
       print(e.toString());
+    }
+  }
+
+  Future acceptShareRequest(String email, String name) async{
+    try{
+
+      var requesterName =  await userCollection.document(uid).get().then((document) {
+                        return document.data['name'];
+                  });
+      
+      await userCollection.document(email).updateData({
+        'shared' : FieldValue.arrayRemove([{'uid' : uid,'name' : requesterName, 'status': 'pending'}])
+      });
+
+      await userCollection.document(email).updateData({
+        'shared' : FieldValue.arrayUnion([{'uid' : uid,'name' : requesterName, 'status': 'accepted'}])
+      });
+
+      await userCollection.document(uid).updateData({
+        'shared' : FieldValue.arrayRemove([{'uid' : email,'name' : name, 'status': 'request'}])
+      });
+
+      await userCollection.document(uid).updateData({
+        'items' : email,
+        'shared' : FieldValue.arrayUnion([{'uid' : email,'name' : name, 'status': 'accepted'}])
+      });
+
+    }catch(e){
+      print(e);
+    }
+  }
+
+  Future rejectShareRequest(String email, String name) async{
+    try{
+
+      var requesterName =  await userCollection.document(uid).get().then((document) {
+                        return document.data['name'];
+                  });
+      
+      await userCollection.document(email).updateData({
+        'shared' : FieldValue.arrayRemove([{'uid' : uid,'name' : requesterName, 'status': 'pending'}])
+      });
+
+      await userCollection.document(uid).updateData({
+        'shared' : FieldValue.arrayRemove([{'uid' : email,'name' : name, 'status': 'request'}])
+      });
+
+    }catch(e){
+      print(e);
     }
   }
 

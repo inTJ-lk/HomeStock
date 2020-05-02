@@ -19,19 +19,25 @@ class _ShareInventoryState extends State<ShareInventory> {
     final user = Provider.of<User>(context);
     final listForUser = Provider.of<UserData>(context);
 
+    // dynamic shared = listForUser.shared.sort();
+    // print(listForUser.shared.sort((a, b) => a['name'].toLowerCase().compareTo(b['name'].toLowerCase()))
+
     _email = _email ?? "";
 
     bool validateEmail(String value) {
       Pattern pattern =
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
       RegExp regex = new RegExp(pattern);
-      if (regex.hasMatch(value))
+
+      var alreadyShared = listForUser.shared.where((i) => i['uid'] == value);
+
+      if (regex.hasMatch(value) && alreadyShared.length == 0)
         return true;
       else
         return false;
     }
 
-    void _showDeleteConfirmationPanel(email, name){
+    void _showDeleteConfirmationPanel(email, name, status){
       showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
@@ -51,7 +57,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                   style: TextStyle(color: Colors.white)
                 ),
                 onPressed: () async{
-                  await DatabaseService(uid: listForUser.email).removeFromSharingInventory(email, name);
+                  await DatabaseService(uid: listForUser.email).removeFromSharingInventory(email, name, status);
                   setState(() {
                     _email = "";
                   });
@@ -157,6 +163,80 @@ class _ShareInventoryState extends State<ShareInventory> {
       });
     }
 
+    void _showAcceptShareRequestPanel(email, name){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Are you sure you want to accept share request from $email? \n',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                'Once you accept you will no longer have access to your inventory. Inventory of $email will be shared with you until you stop sharing/ $email removes your account from sharing list.',
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                '\nRefer Help and Support for more information',
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.green,
+                child: Text(
+                  'Accept',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  await DatabaseService(uid: listForUser.email).acceptShareRequest(email, name);
+                  setState(() {
+                    _email = "";
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
+
+    void _showRejectShareRequestPanel(email, name, status){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Are you sure you want to reject share request from $email? \n',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.red,
+                child: Text(
+                  'Reject',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  await DatabaseService(uid: listForUser.email).rejectShareRequest(email, name);
+                  setState(() {
+                    _email = "";
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
+
     return listForUser != null ? new GestureDetector(
       onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
       child: Scaffold(
@@ -218,14 +298,33 @@ class _ShareInventoryState extends State<ShareInventory> {
                         radius: 25.0,
                         backgroundImage: AssetImage('assets/user.png'),
                       ),
-                      title: Text(listForUser.shared[index]['name']),
-                      subtitle: Text(listForUser.shared[index]['uid']),
-                      trailing: IconButton(
+                      title: Text(listForUser.shared[listForUser.shared.length - index -1]['name']),
+                      subtitle: Text(listForUser.shared[listForUser.shared.length - index -1]['uid']),
+                      trailing: listForUser.shared[listForUser.shared.length - index -1]['status'] == 'request' ? FittedBox(
+                        fit: BoxFit.fill,
+                        child: Row(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.person_add),
+                              onPressed: () async{
+                                _showAcceptShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name']);
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.remove_circle),
+                              onPressed: () async{
+                                _showRejectShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name'], listForUser.shared[index]['status']);
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                       : IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () async{
-                          _showDeleteConfirmationPanel(listForUser.shared[index]['uid'], listForUser.shared[index]['name']);
+                          _showDeleteConfirmationPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name'], listForUser.shared[index]['status']);
                         },
-                      ),
+                      ) 
                     ),
                   );
                 },

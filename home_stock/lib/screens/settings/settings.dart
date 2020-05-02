@@ -27,6 +27,8 @@ class _SettingsState extends State<Settings> {
     final user = Provider.of<User>(context);
     final listForUser = Provider.of<UserData>(context);
 
+    var notifications = listForUser.shared.where((i) => i['status'] == 'request');
+
     // Delete the whole inventory
     void _showClearItemPanel(){
       showModalBottomSheet(context: context, isScrollControlled: true ,builder: (context){
