@@ -34,11 +34,11 @@ class _ShoppingListState extends State<ShoppingList> {
         appBar: AppBar(
           title: Text('Shopping List'),
         ),
-        body: Column(
+        body: processedItems.length != 0 ? Column(
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50.0, 8.0, 50.0, 8.0),
-                    child: processedItems == null ? TextFormField(
+                    child: TextFormField(
                       onChanged: (value){
                         setState(() {
                           _searchString = value;
@@ -47,7 +47,7 @@ class _ShoppingListState extends State<ShoppingList> {
                       decoration: InputDecoration(
                         hintText: 'Search'
                       ),
-                    ) : Text('No items in Shopping List'),
+                    )
                   ),
                   Expanded(
                     child: ListView.builder(
@@ -60,7 +60,9 @@ class _ShoppingListState extends State<ShoppingList> {
                     ),
                   ),
                 ],
-              ),
+              ) : Container(
+                child: Center(child: Text('No items in Shopping List')),
+              )
       ),
     );
   }

@@ -21,7 +21,7 @@ class _EditItemState extends State<EditItem> {
 
   final _formKey = GlobalKey<FormState>();
   final List<String> categories = ['Fresh Food', 'Dry Food', 'Grocery', 'Household', 'Other'];
-  final List<String> metrics = ['Grams', 'Kilograms', 'Milliliters', 'Liters', 'Packets', 'Tins', 'Other'];
+  final List<String> metrics = ['Grams', 'Kilograms', 'Milliliters', 'Liters', 'Packets', 'Tins', 'Bottles', 'Other'];
 
   bool loading = false;
 

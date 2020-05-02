@@ -8,6 +8,7 @@ import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/services/auth.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _SettingsState extends State<Settings> {
     final user = Provider.of<User>(context);
     final listForUser = Provider.of<UserData>(context);
 
-    var notifications = listForUser.shared.where((i) => i['status'] == 'request');
+    var notifications = listForUser != null ? listForUser.shared.where((i) => i['status'] == 'request') : 0;
 
     // Delete the whole inventory
     void _showClearItemPanel(){
@@ -123,7 +124,10 @@ class _SettingsState extends State<Settings> {
                 ),
                 Divider(color: Colors.black),
                 ListTile(
-                  leading: Icon(Icons.share),
+                  leading: notifications.length != 0 ? Badge(
+                    badgeContent: Text(notifications.length.toString()),
+                    child: Icon(Icons.share),
+                  ) : Icon(Icons.share),
                   title: Text('Share Inventory'),
                   onTap: () async{
                     Navigator.push(context, 

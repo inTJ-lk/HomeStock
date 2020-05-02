@@ -4,13 +4,13 @@ import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/home/addItem.dart';
 import 'package:home_stock/screens/home/itemList.dart';
-import 'package:home_stock/screens/notifications/notifications.dart';
 import 'package:home_stock/screens/settings/settings.dart';
 import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/screens/shoppingList/shoppingList.dart';
 import 'package:home_stock/services/database.dart';
 import 'package:home_stock/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart';
 
 class Home extends StatefulWidget {
 
@@ -33,6 +33,9 @@ class _HomeState extends State<Home> {
     // Maps the user with the assigned list 
     // Auth user is not used as there can be many users mapped to the same item list
     final listForUser = Provider.of<UserData>(context);
+
+    // Gets the new share requests to generate the badge count
+    var notifications = listForUser.shared.where((i) => i['status'] == 'request');
 
     // When built is called repeatedly if type is not set(initial load) type is set to All
     _type = _type ?? 'All';
@@ -101,7 +104,10 @@ class _HomeState extends State<Home> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.settings),
+                icon: notifications.length != 0 ? Badge(
+                  badgeContent: Text(notifications.length.toString()),
+                  child: Icon(Icons.settings),
+                ) : Icon(Icons.settings),
                 tooltip: 'Settings',
                 onPressed: () async {
                   await Navigator.push(
@@ -115,21 +121,6 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
-              // IconButton(
-              //   icon: Icon(Icons.notifications),
-              //   tooltip: 'Notifications',
-              //   onPressed: () async {
-              //     await Navigator.push(
-              //       context,
-              //       MaterialPageRoute(builder: (context) =>
-              //         StreamProvider<UserData>.value(
-              //           value: DatabaseService(uid: listForUser.uid).userData,
-              //           child: Notifications()
-              //         )
-              //       ),
-              //     );
-              //   },
-              // )
             ],
           ),
           // Type is passed to the item list to get the relavant category 
