@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:home_stock/screens/settings/changePassword.dart';
+import 'package:home_stock/screens/settings/helpAndSupport.dart';
 import 'package:home_stock/screens/settings/shareInventory.dart';
 import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/services/auth.dart';
@@ -139,12 +140,16 @@ class _SettingsState extends State<Settings> {
                 Divider(color: Colors.black),
                 ListTile(
                   leading: Icon(Icons.help),
-                  title: Text('Help and Support')
+                  title: Text('Help and Support'),onTap: () async{
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder: (context) => HelpAndSupport()),
+                    );
+                  },
                 ),
               ],
             ),
           ),
-          Text('Developed by inTJ Solutions'),
+          Text('Developed by { inTJ }'),
         ],
       ),
     ) : Loading();
