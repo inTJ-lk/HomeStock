@@ -25,7 +25,7 @@ class _NotificationsState extends State<Notifications> {
     List<FirestoreNotification>notifications = [
       FirestoreNotification(timestamp: 'timestamp', title: 'title', message: 'message'),
       FirestoreNotification(timestamp: 'timestamp', title: 'Share Request', message: 'message')
-
+    ];
 
     return new GestureDetector(
       onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
