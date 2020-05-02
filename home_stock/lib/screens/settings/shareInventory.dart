@@ -193,7 +193,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                 textAlign: TextAlign.center,
               ),
               Text(
-                'Once you accept you will no longer have access to your inventory. Inventory of $email will be shared with you until you stop sharing/ $email removes your account from sharing list.',
+                'Once you accept you will no longer have access to your inventory. Inventory of $email will be shared with you until you stop sharing or $email removes your account from sharing list.',
                 textAlign: TextAlign.center,
               ),
               Text(
@@ -300,7 +300,7 @@ class _ShareInventoryState extends State<ShareInventory> {
             SizedBox(height: 10.0),
             // SizedBox(height: 20.0),
             Padding(
-              padding: const EdgeInsets.fromLTRB(7.0, 0, 7.0, 0),
+              padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
               child: Text(
                 'Share your inventory with Family/Friends to let them add and modify items.',
                 style: TextStyle(fontSize: 15.0),textAlign: TextAlign.left
@@ -308,14 +308,14 @@ class _ShareInventoryState extends State<ShareInventory> {
             ),
             SizedBox(height: 10.0),
             Padding(
-              padding: const EdgeInsets.fromLTRB(7.0, 0, 7.0, 0),
+              padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
               child: Text(
                 'Enter the email address of the person to request to share the inventory. Make sure they have installed HomeStock and registered to the system.',
                 style: TextStyle(fontSize: 15.0),textAlign: TextAlign.left
               ),
             ),
             Padding(
-            padding: const EdgeInsets.fromLTRB(50.0, 0, 50.0, 8.0),
+            padding: const EdgeInsets.fromLTRB(50.0, 20.0, 50.0, 10.0),
               child: TextFormField(
                 // autofocus: false,
                 onChanged: (value){setState(() {
@@ -357,13 +357,13 @@ class _ShareInventoryState extends State<ShareInventory> {
                         child: Row(
                           children: <Widget>[
                             IconButton(
-                              icon: Icon(Icons.person_add),
+                              icon: Icon(Icons.check_circle, color: Colors.green, size: 35.0),
                               onPressed: () async{
                                 _showAcceptShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name']);
                               },
                             ),
                             IconButton(
-                              icon: Icon(Icons.remove_circle),
+                              icon: Icon(Icons.cancel, color: Colors.red, size: 35.0),
                               onPressed: () async{
                                 _showRejectShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name'], listForUser.shared[index]['status']);
                               },
