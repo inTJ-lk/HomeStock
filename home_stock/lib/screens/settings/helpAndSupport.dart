@@ -264,13 +264,19 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                     style: TextStyle(fontSize: 16.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text (
-                    'Press the settings button in the app-bar to navigate to settings and select \'Change Password\'. Enter the current password and the new password to change the password.'                   
+                    'Press the settings button in the app-bar to navigate to settings and select \'Change Password\'. Enter the current password and the new password to change the password.',
+                    style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),                   
                   ),
                 ),
                 SizedBox(height: 50.0),
                 Text(
                   'Developed by { inTJ }', 
-                  style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500,),
+                  style: TextStyle(fontSize: 12.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500,),
+                  textAlign: TextAlign.center
+                ),
+                Text(
+                  'intj.lk97@gmail.com', 
+                  style: TextStyle(fontSize: 12.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500,),
                   textAlign: TextAlign.center
                 ),
               ],
