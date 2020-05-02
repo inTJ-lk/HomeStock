@@ -34,6 +34,35 @@ class _AddItemState extends State<AddItem> {
     _category = _category ?? categories[0];
     _metric = _metric ?? metrics[0];
 
+    void _showFailedPanel(){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Failed to add Item',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text(
+                  'Dismiss',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
+
 
     return  loading ? Loading() :  new SystemPadding(
       child: Form(
@@ -102,6 +131,8 @@ class _AddItemState extends State<AddItem> {
                     setState(() {
                       loading = false;
                     });
+                    Navigator.pop(context);
+                    _showFailedPanel();
 
                     //action for when the db function fails
                   }
