@@ -241,7 +241,8 @@ class _ShareInventoryState extends State<ShareInventory> {
       onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
       child: Scaffold(
         appBar: AppBar(
-          title: Center(child: Text('Share Inventory')),
+          title:Text('Share Inventory'),
+          centerTitle: true,
         ),
         body: Column(
           children: <Widget>[

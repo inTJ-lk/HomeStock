@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>985399717861-uk28iusq6298moq6bb9fqae2ie7oqes9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.985399717861-uk28iusq6298moq6bb9fqae2ie7oqes9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCx7DBJeYI3ag6VS6MMnk0d5TZvhctOBmo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>985399717861</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.homeStock</string>
+	<key>PROJECT_ID</key>
+	<string>homestock-cf908</string>
+	<key>STORAGE_BUCKET</key>
+	<string>homestock-cf908.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:985399717861:ios:7f408672656165f9bb890c</string>
+	<key>DATABASE_URL</key>
+	<string>https://homestock-cf908.firebaseio.com</string>
+</dict>
+</plist>
