@@ -23,12 +23,39 @@ class _UpdateStockState extends State<UpdateStock> {
 
   bool loading = false;
 
-  int _quantity;
-  String error = "";
-  
+  int _quantity;  
 
   @override
   Widget build(BuildContext context) {
+
+    void _showFailedPanel(){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Failed Modify Stock',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text(
+                  'Dismiss',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
 
     return loading ? Loading() :SystemPadding(
       child: Container(
@@ -61,10 +88,6 @@ class _UpdateStockState extends State<UpdateStock> {
                   onChanged: (val) => {setState(() => _quantity = int.parse(val))},
                 ),
                 SizedBox(height: 12.0),
-                Text(
-                  error,
-                  style: TextStyle(color: Colors.red, fontSize: 14.0),
-                ),
               ]
               ),
             ),
@@ -85,9 +108,6 @@ class _UpdateStockState extends State<UpdateStock> {
                   else{
                     _quantity = widget.quantity - _quantity;
                   }
-                  print(_quantity);
-                  print(widget.uid);
-                  print(widget.name);
                   dynamic result = await DatabaseService(uid: widget.uid).updateStock(widget.name, _quantity);
                   if(result == null){
                     setState(() {
@@ -99,7 +119,8 @@ class _UpdateStockState extends State<UpdateStock> {
                     setState(() {
                       loading = false;
                     });
-
+                    Navigator.of(context).pop();
+                    _showFailedPanel();
                     //action for when the db function fails
                   }
                 }
