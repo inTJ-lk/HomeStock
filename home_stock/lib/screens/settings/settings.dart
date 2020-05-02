@@ -149,7 +149,6 @@ class _SettingsState extends State<Settings> {
               ],
             ),
           ),
-          Text('Developed by { inTJ }'),
         ],
       ),
     ) : Loading();
