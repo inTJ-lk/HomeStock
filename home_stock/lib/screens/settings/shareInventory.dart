@@ -250,7 +250,7 @@ class _ShareInventoryState extends State<ShareInventory> {
             Padding(
               padding: const EdgeInsets.fromLTRB(7.0, 0, 7.0, 0),
               child: Text(
-                'Share your inventory with Family/Friends to let them modify & receive notifications when quantity is nil.',
+                'Share your inventory with Family/Friends to let them add and modify items.',
                 style: TextStyle(fontSize: 15.0),textAlign: TextAlign.left
               ),
             ),
