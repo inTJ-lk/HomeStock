@@ -86,8 +86,7 @@ class _EditItemState extends State<EditItem> {
               onChanged: (val) => setState(() => _name = val),
               readOnly: true,
             ),
-            SizedBox(height: 30.0),
-            Text('Item Category'),
+            SizedBox(height: 20.0),
             DropdownButtonFormField(
               decoration: InputDecoration(hintText: 'Category'),
               value: _category.isEmpty ? null : categories[categories.indexOf(_category)],
@@ -99,8 +98,7 @@ class _EditItemState extends State<EditItem> {
               }).toList(),
               onChanged: (val) => setState(() => _category = val),
             ),
-            SizedBox(height: 30.0),
-            Text('Metric'),
+            SizedBox(height: 20.0),
             DropdownButtonFormField(
               decoration: InputDecoration(hintText: 'Metric'),
               value: _metric.isEmpty ? null : metrics[metrics.indexOf(_metric)],

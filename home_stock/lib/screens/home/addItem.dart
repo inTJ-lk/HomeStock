@@ -79,8 +79,7 @@ class _AddItemState extends State<AddItem> {
               validator: (val) => val.isEmpty ? 'Please enter a Name' : null,
               onChanged: (val) => setState(() => _name = val),
             ),
-            SizedBox(height: 30.0),
-            Text('Item Category'),
+            SizedBox(height: 20.0),
             DropdownButtonFormField(
               decoration: InputDecoration(hintText: 'Category'),
               value: _category ?? categories[0],
@@ -92,8 +91,7 @@ class _AddItemState extends State<AddItem> {
               }).toList(),
               onChanged: (val) => setState(() => _category = val),
             ),
-            SizedBox(height: 30.0),
-            Text('Metric'),
+            SizedBox(height: 20.0),
             DropdownButtonFormField(
               decoration: InputDecoration(hintText: 'Metric'),
               value: _metric ?? metrics[0],

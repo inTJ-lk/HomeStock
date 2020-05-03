@@ -59,6 +59,7 @@ class _RegisterState extends State<Register> {
                   onChanged: (val) {
                     setState(() {
                       name = val;
+                      error = "";
                     });
                   },
                 ),
@@ -71,6 +72,7 @@ class _RegisterState extends State<Register> {
                   onChanged: (val) {
                     setState(() {
                       email = val;
+                      error = "";
                     });
                   },
                 ),
@@ -84,6 +86,7 @@ class _RegisterState extends State<Register> {
                   onChanged: (val) {
                     setState(() {
                       password = val;
+                      error = "";
                     });
                   },
                 ),
@@ -98,7 +101,7 @@ class _RegisterState extends State<Register> {
                       if(result == null) {
                         setState(() {
                           loading = false;
-                          error = 'please supply a valid email';
+                          error = 'Error registering: Please supply a valid email address and make sure to have a stable internet connection';
                         });
                       }
                     }
@@ -113,6 +116,7 @@ class _RegisterState extends State<Register> {
                 Text(
                   error,
                   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  textAlign: TextAlign.center,
                 )
               ],
               ),
