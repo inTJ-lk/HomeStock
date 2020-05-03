@@ -81,7 +81,7 @@ class _UpdateStockState extends State<UpdateStock> {
                   SizedBox(height: 12.0),
                   TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Qty',
+                    hintText: 'Quantity',
                   ),
                   keyboardType: TextInputType.number,
                   validator: (val) => val.isEmpty || (widget.title == 'Destock' && widget.quantity < int.parse(val)) ? 'Please enter correct Quantity' : null,
