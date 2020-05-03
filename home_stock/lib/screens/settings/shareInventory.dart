@@ -19,9 +19,6 @@ class _ShareInventoryState extends State<ShareInventory> {
     final user = Provider.of<User>(context);
     final listForUser = Provider.of<UserData>(context);
 
-    // dynamic shared = listForUser.shared.sort();
-    // print(listForUser.shared.sort((a, b) => a['name'].toLowerCase().compareTo(b['name'].toLowerCase()))
-
     _email = _email ?? "";
 
     bool validateEmail(String value) {
