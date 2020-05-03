@@ -540,7 +540,10 @@ class _ShareInventoryState extends State<ShareInventory> {
                             IconButton(
                               icon: Icon(Icons.check_circle, color: Colors.green, size: 35.0),
                               onPressed: () async{
-                                if(listForUser.email != listForUser.items){
+
+                                var shared =  await listForUser.shared.where((i) => i['status'] == 'accepted');
+
+                                if(listForUser.email != listForUser.items || shared.lenght != 0){
                                   _showCannotAcceptError();
                                 }else{
                                   _showAcceptShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name']);
@@ -550,7 +553,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                             IconButton(
                               icon: Icon(Icons.cancel, color: Colors.red, size: 35.0),
                               onPressed: () async{
-                                _showRejectShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name'], listForUser.shared[index]['status']);
+                                _showRejectShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name'], listForUser.shared[listForUser.shared.length - index -1]['status']);
                               },
                             ),
                           ],
@@ -559,7 +562,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                        : IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () async{
-                          _showDeleteConfirmationPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name'], listForUser.shared[index]['status']);
+                          _showDeleteConfirmationPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name'], listForUser.shared[listForUser.shared.length - index -1]['status']);
                         },
                       ) 
                     ),
