@@ -543,7 +543,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                         radius: 25.0,
                         backgroundImage: AssetImage('assets/user.png'),
                       ),
-                      title: listForUser.shared[listForUser.shared.length - index -1]['status'] == 'pending' ? Text("${listForUser.shared[listForUser.shared.length - index -1]['name']} (Pending)") : Text(listForUser.shared[listForUser.shared.length - index -1]['name']),
+                      title: listForUser.shared[listForUser.shared.length - index -1]['status'] == 'pending' ? Text("${listForUser.shared[listForUser.shared.length - index -1]['name']} (Pending)") : listForUser.shared[listForUser.shared.length - index -1]['uid'] == listForUser.items ? Text("${listForUser.shared[listForUser.shared.length - index -1]['name']} (Owner)") : Text(listForUser.shared[listForUser.shared.length - index -1]['name']),
                       subtitle: Text(listForUser.shared[listForUser.shared.length - index -1]['uid']),
                       trailing: listForUser.shared[listForUser.shared.length - index -1]['status'] == 'request' ? FittedBox(
                         fit: BoxFit.fill,
