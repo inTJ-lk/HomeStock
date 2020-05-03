@@ -431,15 +431,24 @@ class _ShareInventoryState extends State<ShareInventory> {
       });
     }
 
-    void _showCannotAcceptError(){
+    void _showCannotAcceptError() async{
+
+      // var shared =  await listForUser.shared.where((i) => i['status'] == 'accepted');
+
       showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              listForUser.email != listForUser.items ?
               Text(
                 'You cannot accept new requests as you are already sharing the inventory of ${listForUser.items}. You will be able to accept once you stop sharing with ${listForUser.items}',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ) :
+              Text(
+                'You cannot accept new requests as you are already sharing your inventory. You will be able to accept once you stop sharing your inventory',
                 style: TextStyle(fontSize: 15.0),
                 textAlign: TextAlign.center,
               ),
