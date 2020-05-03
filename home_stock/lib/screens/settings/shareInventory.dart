@@ -417,7 +417,7 @@ class _ShareInventoryState extends State<ShareInventory> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -451,13 +451,13 @@ class _ShareInventoryState extends State<ShareInventory> {
                 textAlign: TextAlign.center,
               ) :
               Text(
-                'You cannot accept new requests as you are already sharing your inventory. You will be able to accept once you stop sharing your inventory',
+                'You cannot accept new requests as you are already sharing your inventory or you have pending requests. You will be able to accept once you stop sharing your inventory and delete pending requests',
                 style: TextStyle(fontSize: 15.0),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)

@@ -196,7 +196,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                     style: TextStyle(fontSize: 16.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text (
-                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\' to share current inventory with another user. Insert the email address of the user and press \'Share\'.',
+                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\' to share current inventory with another user. Insert the email address of the user and press \'Share\'.  NOTE: You can share your inventory with multiple users but you can only share your own inventory. You cannot share an inventory another user else is sharing with you.',
                     style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -208,7 +208,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                     style: TextStyle(fontSize: 16.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text (
-                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\'. Press the accept button to accept or reject button to reject the shared inventory.',
+                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\'. Press the accept button to accept or reject button to reject the shared inventory. NOTE: You cannot accept requests if you are already sharing an inventory or if you have pending requests for your inventory. Make sure to remove all other shares before accepting.',
                     style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -220,7 +220,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                     style: TextStyle(fontSize: 16.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text (
-                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\' to view the users sharing the inventory.',
+                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\' to view the users sharing the inventory. Users who have not accepted your request will be shown as pending',
                     style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -228,11 +228,11 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                 ListTile(
                   leading: Icon(Icons.leak_remove),
                   title: Text (
-                    'Remove Shared Users',
+                    'Remove Shared Users (For Inventory Owners)',
                     style: TextStyle(fontSize: 16.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text (
-                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\'. Press the delete icon in the user to remove the inventory from the user. NOTE: This action requires you to be the creator of the inventory.',
+                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\'. Press the delete icon in the user to remove shared users of the inventory. The owner of the inventory can remove shared users. NOTE: This action requires you to be the owner of the inventory.',
                     style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -240,11 +240,11 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                 ListTile(
                   leading: Icon(Icons.delete),
                   title: Text (
-                    'Delete Shared Inventory',
+                    'Delete Shared Inventory (For Shared Users)',
                     style: TextStyle(fontSize: 16.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text (
-                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\'. Press the delete icon to delete the current shared inventory and switch to local inventory. NOTE: This action requires you to be using a inventory shared by a different user.',
+                    'Press the settings button in the app-bar to navigate to settings and select \'Share Inventory\'. Press the delete icon to delete the current shared inventory and switch to local inventory. NOTE: This action requires you to be using an inventory shared by a different user.',
                     style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -252,7 +252,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                 Text(
                   'NOTE: Please make sure to have a stable internet connection for stock management and inventory sharing.',
                   style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.left
+                  textAlign: TextAlign.center
                 ),
                 SizedBox(height: 30.0),
                 Text(
@@ -262,6 +262,18 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                 ),
                 SizedBox(height: 10.0),
                 Divider(color: Colors.black),
+                SizedBox(height: 10.0),
+                ListTile(
+                  leading: Icon(Icons.text_format),
+                  title: Text (
+                    'Change Name',
+                    style: TextStyle(fontSize: 16.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
+                  ),
+                  subtitle: Text (
+                    'Press the settings button in the app-bar to navigate to settings and select \'Change Name\'. Enter the new name.',
+                    style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),                   
+                  ),
+                ),
                 SizedBox(height: 10.0),
                 ListTile(
                   leading: Icon(Icons.lock),
