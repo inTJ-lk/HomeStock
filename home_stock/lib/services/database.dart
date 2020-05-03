@@ -119,6 +119,13 @@ class DatabaseService {
     });
   }
 
+  // Function to update user name
+  Future updateName(String name) async{
+    return await userCollection.document(uid).updateData({
+      'name' : name
+    });
+  }
+
   // Function to share inventory 
   // Shared field is updated in both the accounts
   // items list is updated in the account to be shared
