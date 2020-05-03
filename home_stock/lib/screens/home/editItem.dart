@@ -135,7 +135,23 @@ class _EditItemState extends State<EditItem> {
                       loading = false;
                     });
                     Navigator.pop(context);
-                  }else{
+                  }else if(result.toString() == 'Connection failed'){
+                      showDialog(context: context, barrierDismissible: true, builder: (context){
+                        return AlertDialog(
+                            content: Container(
+                              child: Text('Action Failed. Make sure you have an active internet connection'),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Dismiss'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                        );
+                      });
+                    }else{
                     Navigator.pop(context);
                     _showFailedPanel();
                   }

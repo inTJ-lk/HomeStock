@@ -88,28 +88,72 @@ class DatabaseService {
 
   // Function to delete an item from a document
   Future deleteItem(String name) async{
-    return await itemCollection.document(uid).updateData({
-      name: FieldValue.delete()
-    });
+    try{
+      bool result = await DataConnectionChecker().hasConnection;
+      if(result != true) {
+        return 'Connection failed';
+      } 
+      return await itemCollection.document(uid).updateData({
+        name: FieldValue.delete()
+      });
+    }catch(e){
+      print(e.toString());
+    }
   }
 
   // Add or Remove item from shopping list
   Future addOrRemoveFromShoppingList(String name, int val) async{
-    return await itemCollection.document(uid).updateData({
-      '$name.inShoppingList': val
-    });
+    try{
+      bool result = await DataConnectionChecker().hasConnection;
+      if(result != true) {
+        return 'Connection failed';
+      } 
+
+      return await itemCollection.document(uid).updateData({
+        '$name.inShoppingList': val
+      });
+
+    }catch(e){
+      print(e.toString());
+    }
+    
   }
 
   // Function to update stock
   Future updateStock(String name, int quantity) async{
-    return await itemCollection.document(uid).updateData({
-      '$name.quantity': quantity
-    });
+
+    try{
+      
+      bool result = await DataConnectionChecker().hasConnection;
+      if(result != true) {
+        return 'Connection failed';
+      } 
+
+      return await itemCollection.document(uid).updateData({
+        '$name.quantity': quantity
+      });
+
+    }catch(e){
+      print(e.toString());
+    }
+    
   }
 
   // Delete Inventory data
   Future deleteInventory() async {
-    return await itemCollection.document(uid).delete();
+    try{
+
+      bool result = await DataConnectionChecker().hasConnection;
+      if(result != true) {
+        return 'Connection failed';
+      } 
+
+      return await itemCollection.document(uid).delete();
+
+    }catch(e){
+      print(e.toString());
+    }
+    
   }
 
   // Function to update user email
@@ -135,7 +179,7 @@ class DatabaseService {
 
       bool result = await DataConnectionChecker().hasConnection;
       if(result != true) {
-        return 'Exception';
+        return 'Connection failed';
       } 
 
       var receiverName =  await userCollection.document(email).get().then((document) {
@@ -162,6 +206,11 @@ class DatabaseService {
   Future removeFromSharingInventory(String email, String name, String status) async{
     try{
 
+      bool result = await DataConnectionChecker().hasConnection;
+      if(result != true) {
+        return 'Connection failed';
+      } 
+
       var requesterName =  await userCollection.document(uid).get().then((document) {
                         return document.data['name'];
                   });
@@ -186,6 +235,11 @@ class DatabaseService {
 
   Future acceptShareRequest(String email, String name) async{
     try{
+
+      bool result = await DataConnectionChecker().hasConnection;
+      if(result != true) {
+        return 'Connection failed';
+      } 
 
       var requesterName =  await userCollection.document(uid).get().then((document) {
                         return document.data['name'];
@@ -216,6 +270,11 @@ class DatabaseService {
 
   Future rejectShareRequest(String email, String name) async{
     try{
+
+      bool result = await DataConnectionChecker().hasConnection;
+      if(result != true) {
+        return 'Connection failed';
+      } 
 
       var requesterName =  await userCollection.document(uid).get().then((document) {
                         return document.data['name'];

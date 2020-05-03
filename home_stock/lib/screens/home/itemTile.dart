@@ -58,8 +58,25 @@ class ItemTile extends StatelessWidget {
                   ),
                   onPressed: () async {
                     int val = item.inShoppingList == 1 ? 0 : 1;
-                    await DatabaseService(uid: listForUser.items).addOrRemoveFromShoppingList(item.name, val);
+                    var i = await DatabaseService(uid: listForUser.items).addOrRemoveFromShoppingList(item.name, val);
                     Navigator.pop(context);
+                    if(i.toString() == 'Connection failed'){
+                      showDialog(context: context, barrierDismissible: true, builder: (context){
+                        return AlertDialog(
+                            content: Container(
+                              child: Text('Action Failed. Make sure you have an active internet connection'),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Dismiss'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                        );
+                      });
+                    }
                   },
                 ),
               ],
@@ -84,8 +101,25 @@ class ItemTile extends StatelessWidget {
                   ),
                   onPressed: () async {
                     int val = item.inShoppingList == 1 ? 0 : 1;
-                    await DatabaseService(uid: listForUser.items).addOrRemoveFromShoppingList(item.name, val);
+                    dynamic i = await DatabaseService(uid: listForUser.items).addOrRemoveFromShoppingList(item.name, val);
                     Navigator.pop(context);
+                    if(i.toString() == 'Connection failed'){
+                      showDialog(context: context, barrierDismissible: true, builder: (context){
+                        return AlertDialog(
+                            content: Container(
+                              child: Text('Action Failed. Make sure you have an active internet connection'),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Dismiss'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                        );
+                      });
+                    }
                   },
                 ),
               ],
@@ -109,8 +143,25 @@ class ItemTile extends StatelessWidget {
                     style: TextStyle(color: Colors.white)
                   ),
                   onPressed: () async {
-                    await DatabaseService(uid: listForUser.items).deleteItem(item.name);
+                    dynamic i = await DatabaseService(uid: listForUser.items).deleteItem(item.name);
                     Navigator.pop(context);
+                    if(i.toString() == 'Connection failed'){
+                      showDialog(context: context, barrierDismissible: true, builder: (context){
+                        return AlertDialog(
+                            content: Container(
+                              child: Text('Action Failed. Make sure you have an active internet connection'),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Dismiss'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                        );
+                      });
+                    }
                   },
                 ),
               ],

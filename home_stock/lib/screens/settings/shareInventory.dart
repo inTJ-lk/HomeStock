@@ -28,7 +28,7 @@ class _ShareInventoryState extends State<ShareInventory> {
 
       var alreadyShared = listForUser.shared.where((i) => i['uid'] == value);
 
-      if (regex.hasMatch(value) && alreadyShared.length == 0)
+      if (regex.hasMatch(value) && alreadyShared.length == 0 && value != user.email)
         return true;
       else
         return false;
@@ -84,6 +84,26 @@ class _ShareInventoryState extends State<ShareInventory> {
                             ),
                           ],
                         ),
+                      );
+                    });
+                  }
+                  if(i.toString() == "Connection failed"){
+                    showDialog(context: context, barrierDismissible: true, builder: (context){
+                      return AlertDialog(
+                          content: Container(
+                            child: Text('Action Failed. Make sure you have an active internet connection'),
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Dismiss'),
+                              onPressed: () {
+                                setState(() {
+                                  _email = "";
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
                       );
                     });
                   }
@@ -145,6 +165,25 @@ class _ShareInventoryState extends State<ShareInventory> {
                           ),
                         );
                       });
+                    }else if(i.toString() == "Connection failed"){
+                      showDialog(context: context, barrierDismissible: true, builder: (context){
+                        return AlertDialog(
+                            content: Container(
+                              child: Text('Action Failed. Make sure you have an active internet connection'),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Dismiss'),
+                                onPressed: () {
+                                  setState(() {
+                                    _email = "";
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                        );
+                      });
                     }else{
                       showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
                         return Container(
@@ -188,7 +227,7 @@ class _ShareInventoryState extends State<ShareInventory> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  'Invalid email address $email, Make sure the email is registered with the system',
+                  'Invalid email address $email, Please try again.',
                   style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20.0),
@@ -271,6 +310,26 @@ class _ShareInventoryState extends State<ShareInventory> {
                       );
                     });
                   }
+                  if(i.toString() == "Connection failed"){
+                    showDialog(context: context, barrierDismissible: true, builder: (context){
+                      return AlertDialog(
+                          content: Container(
+                            child: Text('Action Failed. Make sure you have an active internet connection'),
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Dismiss'),
+                              onPressed: () {
+                                setState(() {
+                                  _email = "";
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                      );
+                    });
+                  }
                 },
               ),
             ],
@@ -340,6 +399,70 @@ class _ShareInventoryState extends State<ShareInventory> {
       });
     }
 
+    void _showCannotShareError(){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'You cannot share your inventory as you are already sharing the inventory of ${listForUser.items}. You will be able to share again once you stop sharing with ${listForUser.items}',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text(
+                  'Dismiss',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  setState(() {
+                    _email = "";
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
+
+    void _showCannotAcceptError(){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'You cannot accept new requests as you are already sharing the inventory of ${listForUser.items}. You will be able to accept once you stop sharing with ${listForUser.items}',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text(
+                  'Dismiss',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  setState(() {
+                    _email = "";
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
+
     return listForUser != null ? new GestureDetector(
       onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
       child: Scaffold(
@@ -388,7 +511,12 @@ class _ShareInventoryState extends State<ShareInventory> {
                 style: TextStyle(color: Colors.white)
               ),
               onPressed: () async {
-                _showConfirmationPanel(_email);
+                if(listForUser.items != listForUser.email){
+                  _showCannotShareError();
+                }else{
+                  _showConfirmationPanel(_email);
+                }
+                
                 // await DatabaseService(uid: listForUser.items).getUserName(_email);
               },
             ),
@@ -412,7 +540,11 @@ class _ShareInventoryState extends State<ShareInventory> {
                             IconButton(
                               icon: Icon(Icons.check_circle, color: Colors.green, size: 35.0),
                               onPressed: () async{
-                                _showAcceptShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name']);
+                                if(listForUser.email != listForUser.items){
+                                  _showCannotAcceptError();
+                                }else{
+                                  _showAcceptShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name']);
+                                }
                               },
                             ),
                             IconButton(

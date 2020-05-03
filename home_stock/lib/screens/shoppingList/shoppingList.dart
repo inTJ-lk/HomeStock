@@ -20,11 +20,11 @@ class _ShoppingListState extends State<ShoppingList> {
     final listForUser = Provider.of<UserData>(context);
 
     List<Item> items = Provider.of<List<Item>>(context) ?? [];
-    List<Item> processedItems = items.where((i) => i.inShoppingList == 1).toList();
+    List<Item> processedItems = items.isNotEmpty ? items.where((i) => i.inShoppingList == 1).toList() : 0;
 
     _searchString = _searchString ?? null;
 
-    if(_searchString != null){
+    if(_searchString != null && processedItems.isNotEmpty){
       processedItems = processedItems.where((item) => item.name.toLowerCase().contains(_searchString.toLowerCase())).toList();
     }
 

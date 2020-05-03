@@ -40,7 +40,7 @@ class _ItemListState extends State<ItemList>{
 
       _searchString = _searchString ?? null;
 
-      if(_searchString != null){
+      if(_searchString != null && i.isNotEmpty){
         i = i.where((item) => item.name.toLowerCase().contains(_searchString.toLowerCase())).toList();
       }
     }
