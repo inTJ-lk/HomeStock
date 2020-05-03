@@ -543,7 +543,7 @@ class _ShareInventoryState extends State<ShareInventory> {
 
                                 var shared =  await listForUser.shared.where((i) => i['status'] == 'accepted');
 
-                                if(listForUser.email != listForUser.items || shared.lenght != 0){
+                                if(listForUser.email != listForUser.items || shared.length != 0){
                                   _showCannotAcceptError();
                                 }else{
                                   _showAcceptShareRequestPanel(listForUser.shared[listForUser.shared.length - index -1]['uid'], listForUser.shared[listForUser.shared.length - index -1]['name']);
