@@ -226,8 +226,12 @@ class _ShareInventoryState extends State<ShareInventory> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                email != listForUser.items ?
                 Text(
-                  'Invalid email address $email, Please try again.',
+                  'Invalid email address $email or the email address is already in the shared list, Please try again.',
+                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
+                ) : Text(
+                  'Inventory is already shared with $email',
                   style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20.0),
@@ -433,8 +437,7 @@ class _ShareInventoryState extends State<ShareInventory> {
 
     void _showCannotAcceptError() async{
 
-      // var shared =  await listForUser.shared.where((i) => i['status'] == 'accepted');
-
+      // var shared =  await listForUser.shared.where((i) => i['status'] == 'pending');
       showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
@@ -550,7 +553,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                               icon: Icon(Icons.check_circle, color: Colors.green, size: 35.0),
                               onPressed: () async{
 
-                                var shared =  await listForUser.shared.where((i) => i['status'] == 'accepted');
+                                var shared =  await listForUser.shared.where((i) => i['status'] == 'accepted' || i['status'] == 'pending');
 
                                 if(listForUser.email != listForUser.items || shared.length != 0){
                                   _showCannotAcceptError();
