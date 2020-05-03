@@ -126,6 +126,23 @@ class _AddItemState extends State<AddItem> {
                       loading = false;
                     });
                     Navigator.pop(context);
+                  }else if(result.toString() == 'Connection failed'){
+                    loading = false;
+                    showDialog(context: context, barrierDismissible: true, builder: (context){
+                      return AlertDialog(
+                          content: Container(
+                            child: Text('Action Failed. Make sure you have an active internet connection'),
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Dismiss'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                      );
+                    });
                   }
                   else{
                     setState(() {

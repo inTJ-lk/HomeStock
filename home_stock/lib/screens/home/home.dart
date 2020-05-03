@@ -69,21 +69,6 @@ class _HomeState extends State<Home> {
             title: Text('HomeStock'),
             centerTitle: true,
             elevation: 0.0,
-            // leading: PopupMenuButton<Choice>(
-            //   // gets the index of the selected category to highlight the category
-            //   initialValue: choices[choices.indexWhere((item) => item.title == _type)],
-            //   onSelected: (value) {setState(() {
-            //     _type = value.title;
-            //   });},
-            //   itemBuilder: (BuildContext context) {
-            //     return choices.map((Choice choice) {
-            //       return PopupMenuItem<Choice>(
-            //         value: choice,
-            //         child: Text(choice.title),
-            //       );
-            //     }).toList();
-            //   }
-            // ),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.shopping_cart),
