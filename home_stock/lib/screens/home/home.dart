@@ -66,6 +66,7 @@ class _HomeState extends State<Home> {
         onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.blue[800],
             title: Text('HomeStock'),
             centerTitle: true,
             elevation: 0.0,
@@ -153,7 +154,7 @@ class _HomeState extends State<Home> {
               _showAddItemPanel();
             },
             child: Icon(Icons.add),
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blue[800],
           ), 
         ),
       ),

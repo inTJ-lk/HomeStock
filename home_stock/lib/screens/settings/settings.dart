@@ -71,6 +71,7 @@ class _SettingsState extends State<Settings> {
     return listForUser != null && user != null ?
     Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[800],
         title: Center(child: Text('Settings')),
         actions: <Widget>[
           FlatButton.icon(

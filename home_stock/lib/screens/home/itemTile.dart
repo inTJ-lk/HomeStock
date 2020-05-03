@@ -124,11 +124,12 @@ class ItemTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: Card(
+        color: item.quantity > 0 ? Colors.white : Colors.red[100],
         margin: EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 0.0),
         child: ListTile(
           leading: CircleAvatar(
             radius: 20.0,
-            backgroundColor: Colors.white,
+            backgroundColor: item.quantity > 0 ? Colors.white : Colors.red[100],
             backgroundImage: AssetImage('assets/${item.category.split(" ")[0]}.png'),
           ),
           title: Center(

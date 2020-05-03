@@ -48,7 +48,7 @@ class _AddItemState extends State<AddItem> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -109,7 +109,7 @@ class _AddItemState extends State<AddItem> {
             ),
             SizedBox(height: 20.0),
             RaisedButton(
-              color: Colors.blue,
+              color: Colors.blue[800],
               child: Text(
                 'Add Item',
                 style: TextStyle(color: Colors.white)

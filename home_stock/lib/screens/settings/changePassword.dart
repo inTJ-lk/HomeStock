@@ -19,6 +19,36 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
+
+    void _showSuccessPanel(){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Password Changed Successfully',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.blue[800],
+                child: Text(
+                  'Dismiss',
+                  style: TextStyle(color: Colors.white)
+                ),
+                onPressed: () async{
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      });
+    }
+
     void _showFailedPanel(){
       showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
         return Container(
@@ -27,13 +57,13 @@ class _ChangePasswordState extends State<ChangePassword> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                'Failed Change Password',
+                'Failed To Change Password',
                 style: TextStyle(fontSize: 15.0),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -105,7 +135,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                   ),
                   RaisedButton(
-                    color: Colors.blue,
+                    color: Colors.blue[800],
                     child: Text(
                       'Reset',
                       style: TextStyle(color: Colors.white)
@@ -121,6 +151,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             loading = false;
                           });
                           Navigator.of(context).pop();
+                          _showSuccessPanel();
                         }
                         else {
                           setState(() {

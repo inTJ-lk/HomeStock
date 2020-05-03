@@ -42,7 +42,7 @@ class _UpdateStockState extends State<UpdateStock> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -92,7 +92,7 @@ class _UpdateStockState extends State<UpdateStock> {
               ),
             ),
             RaisedButton(
-              color: Colors.blue,
+              color: Colors.blue[800],
               child: Text(
                 'Done',
                 style: TextStyle(color: Colors.white)

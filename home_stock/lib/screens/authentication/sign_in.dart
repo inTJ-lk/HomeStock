@@ -37,7 +37,7 @@ class _SignInState extends State<SignIn> {
     return  loading ? Loading() : Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue[800],
         elevation: 0.0,
         title: Text('HomeStock'),
         centerTitle: true,
@@ -108,7 +108,7 @@ class _SignInState extends State<SignIn> {
                           }
                         }
                       },
-                      color: Colors.blue[400],
+                      color: Colors.blue[800],
                       child: Text(
                         'Sign In',
                         style: TextStyle(color: Colors.white),
