@@ -48,7 +48,7 @@ class _AddItemState extends State<AddItem> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -81,6 +81,7 @@ class _AddItemState extends State<AddItem> {
             ),
             SizedBox(height: 20.0),
             DropdownButtonFormField(
+              decoration: InputDecoration(hintText: 'Category'),
               value: _category ?? categories[0],
               items: categories.map((item){
                 return DropdownMenuItem(
@@ -90,7 +91,9 @@ class _AddItemState extends State<AddItem> {
               }).toList(),
               onChanged: (val) => setState(() => _category = val),
             ),
+            SizedBox(height: 20.0),
             DropdownButtonFormField(
+              decoration: InputDecoration(hintText: 'Metric'),
               value: _metric ?? metrics[0],
               items: metrics.map((item){
                 return DropdownMenuItem(
@@ -109,7 +112,7 @@ class _AddItemState extends State<AddItem> {
             ),
             SizedBox(height: 20.0),
             RaisedButton(
-              color: Colors.blue,
+              color: Colors.blue[800],
               child: Text(
                 'Add Item',
                 style: TextStyle(color: Colors.white)

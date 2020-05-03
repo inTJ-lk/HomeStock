@@ -32,6 +32,7 @@ class _ShoppingListState extends State<ShoppingList> {
       onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue[800],
           title: Text('Shopping List'),
         ),
         body: processedItems.length != 0 ? Column(

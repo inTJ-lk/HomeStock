@@ -54,7 +54,7 @@ class _EditItemState extends State<EditItem> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -88,6 +88,7 @@ class _EditItemState extends State<EditItem> {
             ),
             SizedBox(height: 20.0),
             DropdownButtonFormField(
+              decoration: InputDecoration(hintText: 'Category'),
               value: _category.isEmpty ? null : categories[categories.indexOf(_category)],
               items: categories.map((category){
                 return DropdownMenuItem(
@@ -97,7 +98,9 @@ class _EditItemState extends State<EditItem> {
               }).toList(),
               onChanged: (val) => setState(() => _category = val),
             ),
+            SizedBox(height: 20.0),
             DropdownButtonFormField(
+              decoration: InputDecoration(hintText: 'Metric'),
               value: _metric.isEmpty ? null : metrics[metrics.indexOf(_metric)],
               items: metrics.map((metric){
                 return DropdownMenuItem(
@@ -116,7 +119,7 @@ class _EditItemState extends State<EditItem> {
             ),
             SizedBox(height: 20.0),
             RaisedButton(
-              color: Colors.blue,
+              color: Colors.blue[800],
               child: Text(
                 'Edit Item',
                 style: TextStyle(color: Colors.white)

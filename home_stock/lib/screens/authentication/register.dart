@@ -29,7 +29,7 @@ class _RegisterState extends State<Register> {
     return loading ? Loading() : Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue[800],
         elevation: 0.0,
         title: Text('Register to HomeStock'),
         actions: <Widget>[
@@ -37,8 +37,8 @@ class _RegisterState extends State<Register> {
             onPressed: () {
               widget.toggleView();
             }, 
-            icon: Icon(Icons.person), 
-            label: Text('Sign In')
+            icon: Icon(Icons.person, color: Colors.white,), 
+            label: Text('Sign In', style: TextStyle(color: Colors.white),)
           )
         ],
       ),
@@ -59,6 +59,7 @@ class _RegisterState extends State<Register> {
                   onChanged: (val) {
                     setState(() {
                       name = val;
+                      error = "";
                     });
                   },
                 ),
@@ -71,6 +72,7 @@ class _RegisterState extends State<Register> {
                   onChanged: (val) {
                     setState(() {
                       email = val;
+                      error = "";
                     });
                   },
                 ),
@@ -84,6 +86,7 @@ class _RegisterState extends State<Register> {
                   onChanged: (val) {
                     setState(() {
                       password = val;
+                      error = "";
                     });
                   },
                 ),
@@ -98,12 +101,12 @@ class _RegisterState extends State<Register> {
                       if(result == null) {
                         setState(() {
                           loading = false;
-                          error = 'please supply a valid email';
+                          error = 'Error registering: Please supply a valid email address and make sure to have a stable internet connection';
                         });
                       }
                     }
                   },
-                  color: Colors.blue[400],
+                  color: Colors.blue[800],
                   child: Text(
                     'Register',
                     style: TextStyle(color: Colors.white),
@@ -113,6 +116,7 @@ class _RegisterState extends State<Register> {
                 Text(
                   error,
                   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  textAlign: TextAlign.center,
                 )
               ],
               ),

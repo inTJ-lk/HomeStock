@@ -60,19 +60,30 @@ class _ShareInventoryState extends State<ShareInventory> {
                   });
                   Navigator.pop(context);
                   if(i.toString() == "Exception"){
-                    showDialog(context: context, barrierDismissible: true, builder: (context){
-                      return AlertDialog(
-                        content: Container(
-                          child: Text('Action Failed. Please try again'),
+                    showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Action Failed. Please try again.',
+                              style: TextStyle(fontSize: 15.0),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 20.0),
+                            RaisedButton(
+                              color: Colors.blue[800],
+                              child: Text(
+                                'Dismiss',
+                                style: TextStyle(color: Colors.white)
+                              ),
+                              onPressed: () async{
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
                         ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Dismiss'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
                       );
                     });
                   }
@@ -118,7 +129,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                 ),
                 SizedBox(height: 20.0),
                 RaisedButton(
-                  color: Colors.blue,
+                  color: Colors.blue[800],
                   child: Text(
                     'Share',
                     style: TextStyle(color: Colors.white)
@@ -128,19 +139,30 @@ class _ShareInventoryState extends State<ShareInventory> {
                     dynamic i = await DatabaseService(uid: listForUser.items).shareInventory(email);
                     Navigator.pop(context);
                     if(i.toString() == "Exception"){
-                      showDialog(context: context, barrierDismissible: true, builder: (context){
-                        return AlertDialog(
-                          content: Container(
-                            child: Text('Invalid email address $email, Make sure the email is registered with the system'),
+                      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+                        return Container(
+                          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                'Invalid email address $email, Make sure the email is registered with the system.',
+                                style: TextStyle(fontSize: 15.0),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 20.0),
+                              RaisedButton(
+                                color: Colors.blue[800],
+                                child: Text(
+                                  'Dismiss',
+                                  style: TextStyle(color: Colors.white)
+                                ),
+                                onPressed: () async{
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
                           ),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Dismiss'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
                         );
                       });
                     }else if(i.toString() == "Connection failed"){
@@ -163,22 +185,33 @@ class _ShareInventoryState extends State<ShareInventory> {
                         );
                       });
                     }else{
-                      showDialog(context: context, barrierDismissible: true, builder: (context){
-                        return AlertDialog(
-                          content: Container(
-                            child: Text('Invitation sent successfully. Inventory will be shared once $email accepts your request'),
+                      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+                        return Container(
+                          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                'Invitation sent successfully. Inventory will be shared once $email accepts your request.',
+                                style: TextStyle(fontSize: 15.0),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 20.0),
+                              RaisedButton(
+                                color: Colors.blue[800],
+                                child: Text(
+                                  'Dismiss',
+                                  style: TextStyle(color: Colors.white)
+                                ),
+                                onPressed: () async{
+                                  setState(() {
+                                    _email = "";
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
                           ),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Dismiss'),
-                              onPressed: () {
-                                setState(() {
-                                  _email = "";
-                                });
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
                         );
                       });
                     }
@@ -199,7 +232,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                 ),
                 SizedBox(height: 20.0),
                 RaisedButton(
-                  color: Colors.blue,
+                  color: Colors.blue[800],
                   child: Text(
                     'Dismiss',
                     style: TextStyle(color: Colors.white)
@@ -250,19 +283,30 @@ class _ShareInventoryState extends State<ShareInventory> {
                   });
                   Navigator.pop(context);
                   if(i.toString() == "Exception"){
-                    showDialog(context: context, barrierDismissible: true, builder: (context){
-                      return AlertDialog(
-                        content: Container(
-                          child: Text('Action Failed. Please try again'),
+                    showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Action Failed. Please try again.',
+                              style: TextStyle(fontSize: 15.0),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 20.0),
+                            RaisedButton(
+                              color: Colors.blue[800],
+                              child: Text(
+                                'Dismiss',
+                                style: TextStyle(color: Colors.white)
+                              ),
+                              onPressed: () async{
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
                         ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Dismiss'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
                       );
                     });
                   }
@@ -320,19 +364,30 @@ class _ShareInventoryState extends State<ShareInventory> {
                   });
                   Navigator.pop(context);
                   if(i.toString() == "Exception"){
-                    showDialog(context: context, barrierDismissible: true, builder: (context){
-                      return AlertDialog(
-                        content: Container(
-                          child: Text('Action Failed. Please try again'),
+                    showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Action Failed. Please try again.',
+                              style: TextStyle(fontSize: 15.0),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 20.0),
+                            RaisedButton(
+                              color: Colors.blue[800],
+                              child: Text(
+                                'Dismiss',
+                                style: TextStyle(color: Colors.white)
+                              ),
+                              onPressed: () async{
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
                         ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Dismiss'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
                       );
                     });
                   }
@@ -412,6 +467,7 @@ class _ShareInventoryState extends State<ShareInventory> {
       onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue[800],
           title:Text('Share Inventory'),
           centerTitle: true,
         ),
@@ -449,7 +505,7 @@ class _ShareInventoryState extends State<ShareInventory> {
             ),
             SizedBox(height: 10.0),
             RaisedButton(
-              color: Colors.blue,
+              color: Colors.blue[800],
               child: Text(
                 'Share',
                 style: TextStyle(color: Colors.white)
