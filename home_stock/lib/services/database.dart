@@ -1,3 +1,4 @@
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -125,6 +126,11 @@ class DatabaseService {
     
     try{
 
+      bool result = await DataConnectionChecker().hasConnection;
+      if(result != true) {
+        return 'Exception';
+      } 
+
       var receiverName =  await userCollection.document(email).get().then((document) {
                         return document.data['name'];
                   });
@@ -161,11 +167,13 @@ class DatabaseService {
       });
 
       return await userCollection.document(uid).updateData({
+        'items' : uid,
         'shared' : FieldValue.arrayRemove([{'uid' : email,'name' : name, 'status': status}])
       });
 
     }catch(e){
       print(e.toString());
+      return 'Exception';
     }
   }
 
@@ -195,6 +203,7 @@ class DatabaseService {
 
     }catch(e){
       print(e);
+      return 'Exception';
     }
   }
 
@@ -215,6 +224,7 @@ class DatabaseService {
 
     }catch(e){
       print(e);
+      return 'Exception';
     }
   }
 

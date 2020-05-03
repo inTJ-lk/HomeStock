@@ -19,9 +19,6 @@ class _ShareInventoryState extends State<ShareInventory> {
     final user = Provider.of<User>(context);
     final listForUser = Provider.of<UserData>(context);
 
-    // dynamic shared = listForUser.shared.sort();
-    // print(listForUser.shared.sort((a, b) => a['name'].toLowerCase().compareTo(b['name'].toLowerCase()))
-
     _email = _email ?? "";
 
     bool validateEmail(String value) {
@@ -57,11 +54,28 @@ class _ShareInventoryState extends State<ShareInventory> {
                   style: TextStyle(color: Colors.white)
                 ),
                 onPressed: () async{
-                  await DatabaseService(uid: listForUser.email).removeFromSharingInventory(email, name, status);
+                  dynamic i = await DatabaseService(uid: listForUser.email).removeFromSharingInventory(email, name, status);
                   setState(() {
                     _email = "";
                   });
                   Navigator.pop(context);
+                  if(i.toString() == "Exception"){
+                    showDialog(context: context, barrierDismissible: true, builder: (context){
+                      return AlertDialog(
+                        content: Container(
+                          child: Text('Action Failed. Please try again'),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Dismiss'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+                  }
                 },
               ),
             ],
@@ -191,11 +205,28 @@ class _ShareInventoryState extends State<ShareInventory> {
                   style: TextStyle(color: Colors.white)
                 ),
                 onPressed: () async{
-                  await DatabaseService(uid: listForUser.email).acceptShareRequest(email, name);
+                  dynamic i = await DatabaseService(uid: listForUser.email).acceptShareRequest(email, name);
                   setState(() {
                     _email = "";
                   });
                   Navigator.pop(context);
+                  if(i.toString() == "Exception"){
+                    showDialog(context: context, barrierDismissible: true, builder: (context){
+                      return AlertDialog(
+                        content: Container(
+                          child: Text('Action Failed. Please try again'),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Dismiss'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+                  }
                 },
               ),
             ],
@@ -224,11 +255,28 @@ class _ShareInventoryState extends State<ShareInventory> {
                   style: TextStyle(color: Colors.white)
                 ),
                 onPressed: () async{
-                  await DatabaseService(uid: listForUser.email).rejectShareRequest(email, name);
+                  dynamic i = await DatabaseService(uid: listForUser.email).rejectShareRequest(email, name);
                   setState(() {
                     _email = "";
                   });
                   Navigator.pop(context);
+                  if(i.toString() == "Exception"){
+                    showDialog(context: context, barrierDismissible: true, builder: (context){
+                      return AlertDialog(
+                        content: Container(
+                          child: Text('Action Failed. Please try again'),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Dismiss'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+                  }
                 },
               ),
             ],
