@@ -104,4 +104,16 @@ class AuthService {
     }
   }
 
+  Future changeName(String name) async {
+    try {
+      FirebaseUser user = await _auth.currentUser();
+
+      await DatabaseService(uid: user.email).updateName(name);
+      
+    } 
+    catch (e) {
+      return e;
+    }
+  }
+
 }

@@ -42,7 +42,7 @@ class _UpdateStockState extends State<UpdateStock> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -81,7 +81,7 @@ class _UpdateStockState extends State<UpdateStock> {
                   SizedBox(height: 12.0),
                   TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Qty',
+                    hintText: 'Quantity',
                   ),
                   keyboardType: TextInputType.number,
                   validator: (val) => val.isEmpty || (widget.title == 'Destock' && widget.quantity < int.parse(val)) ? 'Please enter correct Quantity' : null,
@@ -92,7 +92,7 @@ class _UpdateStockState extends State<UpdateStock> {
               ),
             ),
             RaisedButton(
-              color: Colors.blue,
+              color: Colors.blue[800],
               child: Text(
                 'Done',
                 style: TextStyle(color: Colors.white)

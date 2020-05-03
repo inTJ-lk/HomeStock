@@ -17,13 +17,13 @@ class DatabaseService {
       'name': name,
       'items': email,
       'email': email,
-      'shared': null
+      'shared': [],
     });
   }
 
   Future createItemCollection(String email) async {
     return await itemCollection.document(email).setData({
-      'Test Item': {'name':'Test Item', 'category': 'Fresh Food', 'metric': 'Kilograms', 'quantity': 2, 'inShoppingList': 0}
+      'Test Item': {'name':'Test Item', 'category': 'Fresh Food', 'metric': 'Kilograms', 'quantity': 1, 'inShoppingList': 0}
     });
   }
 
@@ -116,6 +116,13 @@ class DatabaseService {
   Future updateEmail(String email) async{
     return await userCollection.document(uid).updateData({
       'email' : email
+    });
+  }
+
+  // Function to update user name
+  Future updateName(String name) async{
+    return await userCollection.document(uid).updateData({
+      'name' : name
     });
   }
 

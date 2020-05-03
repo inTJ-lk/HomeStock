@@ -16,6 +16,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue[800],
           title:Text('Help and Support'),
           centerTitle: true,
         ),
@@ -247,8 +248,13 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                     style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
                   ),
                 ),
-                SizedBox(height: 10.0),
-                SizedBox(height: 10.0),
+                SizedBox(height: 20.0),
+                Text(
+                  'NOTE: Please make sure to have a stable internet connection for stock management and inventory sharing.',
+                  style: TextStyle(fontSize: 15.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.left
+                ),
+                SizedBox(height: 30.0),
                 Text(
                   'Account Settings',
                   style: TextStyle(fontSize: 18.0, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),

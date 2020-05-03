@@ -66,6 +66,7 @@ class _HomeState extends State<Home> {
         onTap: (){FocusScope.of(context).requestFocus(new FocusNode());},
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.blue[800],
             title: Text('HomeStock'),
             centerTitle: true,
             elevation: 0.0,
@@ -132,6 +133,7 @@ class _HomeState extends State<Home> {
                 return ListTile(
                   leading: CircleAvatar(
                     radius: 25.0,
+                    backgroundColor: Colors.blue[800],
                     backgroundImage: AssetImage('assets/${choices[index].title.split(" ")[0]}.png'),
                   ),
                   title: Text(choices[index].title, style: TextStyle(fontSize: 17.0, fontWeight: choices[index].title == _type ? FontWeight.bold : null),),
@@ -153,7 +155,7 @@ class _HomeState extends State<Home> {
               _showAddItemPanel();
             },
             child: Icon(Icons.add),
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blue[800],
           ), 
         ),
       ),

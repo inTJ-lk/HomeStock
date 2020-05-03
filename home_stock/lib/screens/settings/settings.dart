@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_stock/models/item.dart';
 import 'package:home_stock/models/user.dart';
+import 'package:home_stock/screens/settings/changeName.dart';
 import 'package:home_stock/screens/settings/changePassword.dart';
 import 'package:home_stock/screens/settings/helpAndSupport.dart';
 import 'package:home_stock/screens/settings/shareInventory.dart';
@@ -61,6 +62,13 @@ class _SettingsState extends State<Settings> {
       });
     }
 
+    void _showChangeNamePanel(){
+      
+      showModalBottomSheet(context: context, isScrollControlled: true ,builder: (context){
+        return ChangeName();
+      });
+    }
+
     void _showChangePasswordPanel(){
       
       showModalBottomSheet(context: context, isScrollControlled: true ,builder: (context){
@@ -71,6 +79,7 @@ class _SettingsState extends State<Settings> {
     return listForUser != null && user != null ?
     Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[800],
         title: Center(child: Text('Settings')),
         actions: <Widget>[
           FlatButton.icon(
@@ -110,6 +119,12 @@ class _SettingsState extends State<Settings> {
                 //   title: Text('Change Email'),
                 //   onTap: (){},
                 // ),
+                Divider(color: Colors.black),
+                ListTile(
+                  leading: Icon(Icons.text_format),
+                  title: Text('Change Name'),
+                  onTap: (){_showChangeNamePanel();}
+                ),
                 Divider(color: Colors.black),
                 ListTile(
                   leading: Icon(Icons.lock),

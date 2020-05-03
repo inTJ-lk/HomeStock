@@ -3,19 +3,18 @@ import 'package:home_stock/screens/shared/loading.dart';
 import 'package:home_stock/services/auth.dart';
 import 'package:home_stock/screens/shared/systemPadding.dart';
 
-class ChangePassword extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
   @override
-  _ChangePasswordState createState() => _ChangePasswordState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ForgotPasswordState extends State<ForgotPassword> {
 
   final AuthService _auth = AuthService();
   final _formKey1 = GlobalKey<FormState>();
   bool loading = false;
 
-  String currentPassword = "";
-  String newPassword = "";
+  String email = "";
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                'Password Changed Successfully',
+                'Password reset email sent. Use the link in the email to reset password',
                 style: TextStyle(fontSize: 15.0),
                 textAlign: TextAlign.center,
               ),
@@ -57,7 +56,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                'Failed To Change Password',
+                'Failed To send password reset email. Please enter a valid email address registered on HomeStock and make sure you have a stable internet connection.',
                 style: TextStyle(fontSize: 15.0),
                 textAlign: TextAlign.center,
               ),
@@ -85,7 +84,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Change Password',
+                    'Reset Password',
                     style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 20.0),
@@ -94,44 +93,26 @@ class _ChangePasswordState extends State<ChangePassword> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        SizedBox(height: 20.0),
-                        Text(
-                          'Enter Current Password',
-                          style: TextStyle(color: Colors.black, fontSize: 16.0),
-                        ),
                         SizedBox(height: 12.0),
-                        TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'Current Password',
-                        ),
-                        obscureText: true,
-                        validator: (val) => val.length < 6 ? 'Enter a password at least 6 charcters long' : null,
-                        onChanged: (val) {
-                          setState(() {
-                            currentPassword = val;
-                          });
-                        },
+                      Text(
+                        'Enter your account email to reset password',
+                        style: TextStyle(color: Colors.black, fontSize: 16.0),
+                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 50.0),
-                        Text(
-                          'Enter New Password',
-                          style: TextStyle(color: Colors.black, fontSize: 16.0),
-                        ),
-                        SizedBox(height: 12.0),
-                        TextFormField(
+                      SizedBox(height: 12.0),
+                      TextFormField(
                         decoration: InputDecoration(
-                          hintText: 'New Password',
+                          hintText: 'Email',
                         ),
-                        obscureText: true,
-                        validator: (val) => val.length < 6 ? 'Enter a password at least 6 charcters long' : null,
+                        validator: (val) => val.isEmpty ? 'Enter an email' : null,
                         onChanged: (val) {
                           setState(() {
-                            newPassword = val;
+                            email = val;
                           });
                         },
                       ),
                       SizedBox(height: 12.0),
-                    ]
+                      ]
                     ),
                   ),
                   RaisedButton(
@@ -145,7 +126,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         setState(() {
                           loading = true;
                         });
-                        dynamic result = await _auth.changePassword(currentPassword,newPassword);
+                        dynamic result = await _auth.resetPassword(email);
                         if(result == null) {
                           setState(() {
                             loading = false;
