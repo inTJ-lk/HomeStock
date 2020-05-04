@@ -226,8 +226,12 @@ class _ShareInventoryState extends State<ShareInventory> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                email != listForUser.items ?
                 Text(
-                  'Invalid email address $email, Please try again.',
+                  'Invalid email address $email or the email address is already in the shared list, Please try again.',
+                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
+                ) : Text(
+                  'Inventory is already shared with $email',
                   style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20.0),
@@ -413,7 +417,7 @@ class _ShareInventoryState extends State<ShareInventory> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -431,21 +435,29 @@ class _ShareInventoryState extends State<ShareInventory> {
       });
     }
 
-    void _showCannotAcceptError(){
+    void _showCannotAcceptError() async{
+
+      // var shared =  await listForUser.shared.where((i) => i['status'] == 'pending');
       showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              listForUser.email != listForUser.items ?
               Text(
                 'You cannot accept new requests as you are already sharing the inventory of ${listForUser.items}. You will be able to accept once you stop sharing with ${listForUser.items}',
+                style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ) :
+              Text(
+                'You cannot accept new requests as you are already sharing your inventory or you have pending requests. You will be able to accept once you stop sharing your inventory and delete pending requests',
                 style: TextStyle(fontSize: 15.0),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Text(
                   'Dismiss',
                   style: TextStyle(color: Colors.white)
@@ -531,7 +543,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                         radius: 25.0,
                         backgroundImage: AssetImage('assets/user.png'),
                       ),
-                      title: listForUser.shared[listForUser.shared.length - index -1]['status'] == 'pending' ? Text("${listForUser.shared[listForUser.shared.length - index -1]['name']} (Pending)") : Text(listForUser.shared[listForUser.shared.length - index -1]['name']),
+                      title: listForUser.shared[listForUser.shared.length - index -1]['status'] == 'pending' ? Text("${listForUser.shared[listForUser.shared.length - index -1]['name']} (Pending)") : listForUser.shared[listForUser.shared.length - index -1]['uid'] == listForUser.items ? Text("${listForUser.shared[listForUser.shared.length - index -1]['name']} (Owner)") : Text(listForUser.shared[listForUser.shared.length - index -1]['name']),
                       subtitle: Text(listForUser.shared[listForUser.shared.length - index -1]['uid']),
                       trailing: listForUser.shared[listForUser.shared.length - index -1]['status'] == 'request' ? FittedBox(
                         fit: BoxFit.fill,
@@ -541,7 +553,7 @@ class _ShareInventoryState extends State<ShareInventory> {
                               icon: Icon(Icons.check_circle, color: Colors.green, size: 35.0),
                               onPressed: () async{
 
-                                var shared =  await listForUser.shared.where((i) => i['status'] == 'accepted');
+                                var shared =  await listForUser.shared.where((i) => i['status'] == 'accepted' || i['status'] == 'pending');
 
                                 if(listForUser.email != listForUser.items || shared.length != 0){
                                   _showCannotAcceptError();
