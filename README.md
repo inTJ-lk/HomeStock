@@ -30,4 +30,5 @@ HomeStock is a mobile inventory management system for organizing household items
 ![Screenshot_2020-07-28-19-02-15](https://user-images.githubusercontent.com/43147809/88673881-bf6fb700-d106-11ea-83ee-7ecf54dc78c6.jpg)
 
 ## Share Inventory
-![Screenshot_2020-07-28-18-59-16](https://user-images.githubusercontent.com/43147809/88673889-c1d21100-d106-11ea-97e4-0f5f7cd28fbb.jpg)
+![Screenshot_2020-07-28-19-02-49](https://user-images.githubusercontent.com/43147809/88674080-ff369e80-d106-11ea-8fbb-957838dfa671.jpg)
+
